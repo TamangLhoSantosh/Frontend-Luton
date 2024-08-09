@@ -29,8 +29,8 @@ const roomDetails = [
 
 const RoomRateComponent = () => {
   return (
-    <div id="roomrate">
-      <p className="text-customDarkOrange text-5xl text-center font-semibold my-20">
+    <div id="roomrate" className="font-ubuntu">
+      <p className="text-customDarkOrange text-5xl text-center my-20">
         Rooms & Rates
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 container mx-auto p-10 md:p-0">

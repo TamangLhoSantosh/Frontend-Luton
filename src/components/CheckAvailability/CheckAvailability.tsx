@@ -73,7 +73,7 @@ const CheckAvailability = () => {
     <form
       action="submit"
       onSubmit={handleSubmit}
-      className="flex justify-center items-center bg-black h-32 p-4 shadow-lg space-x-4"
+      className="flex justify-center items-center bg-black h-32 p-4 shadow-lg space-x-4 font-ubuntu"
     >
       <DatePicker
         selected={formData.checkIn ? new Date(formData.checkIn) : null}
@@ -93,10 +93,10 @@ const CheckAvailability = () => {
         name="roomType"
         value={formData.roomType}
         onChange={handleChange}
-        className="text-lg px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
+        className="text-gray-400 px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
       >
         <option value="" disabled>
-          Select Room
+          Select Room Type
         </option>
         <option value="twin">Twin Room</option>
         <option value="single">Single Room</option>

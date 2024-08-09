@@ -10,10 +10,10 @@ const FooterComponent = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 bg-black text-white pb-20 pt-10">
+    <div className="grid grid-cols-1 md:grid-cols-3 bg-black text-white pb-5 pt-10 font-ubuntu">
       <div className="p-10 pb-20">
         <img src={Logo} alt="Logo" className="h-56" />
-        <p className="ps-5 text-2xl font-bold">Luton Hotel Head Office</p>
+        <p className="ps-5 text-2xl font-semibold">Luton Hotel Head Office</p>
         <p className="ps-5 text-2xl">+21 434 344 432</p>
         <p className="ps-5 text-2xl">info@lutonhotel.com</p>
       </div>

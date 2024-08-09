@@ -23,8 +23,8 @@ const facilities = [
 
 const FacilitiesComponent = () => {
   return (
-    <div id="facilities">
-      <p className="text-5xl text-center text-customDarkOrange font-semibold pt-10 pb-20">
+    <div id="facilities" className="font-ubuntu">
+      <p className="text-5xl text-center text-customDarkOrange pt-10 pb-20">
         Facilities
       </p>
       <div className="flex container mx-auto justify-around">

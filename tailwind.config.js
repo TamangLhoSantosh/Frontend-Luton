@@ -7,6 +7,9 @@ export default {
         customOrange: "#DFAA5B",
         customDarkOrange: "#957554",
       },
+      fontFamily: {
+        ubuntu: ["Ubuntu", "sans-serif"],
+      },
     },
   },
   plugins: [],

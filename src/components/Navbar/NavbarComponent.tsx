@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
         } md:hidden`}
         style={{ width: "100vw" }}
       >
-        <div className="flex flex-col items-center space-y-4 py-4 mt-20 relative">
+        <div className="flex flex-col items-center space-y-4 py-4 mt-20 relative font-ubuntu">
           {/* Close button */}
           <button
             onClick={toggleMenu}
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Primary Navbar items */}
-      <div className="hidden md:flex md:justify-center md:space-x-8 md:pb-6">
+      <div className="hidden md:flex md:justify-center md:space-x-8 md:pb-6 font-ubuntu">
         <Link
           to={"/"}
           className="text-2xl text-customDarkOrange hover:text-customOrange"
@@ -140,7 +140,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Secondary Navbar items */}
-      <div className="hidden md:flex md:absolute md:right-0 md:bottom-0 md:space-x-2 md:pr-6  md:pb-6">
+      <div className="hidden md:flex md:absolute md:right-0 md:bottom-0 md:space-x-2 md:pr-6 md:pb-6 font-ubuntu">
         <Link
           to="/login"
           className="py-2 px-4 font-medium text-gray-500 rounded hover:bg-customOrange hover:text-white transition duration-300"
