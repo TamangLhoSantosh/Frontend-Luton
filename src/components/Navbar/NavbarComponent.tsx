@@ -1,25 +1,23 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 
-const Navbar = () => {
-  // State to manage mobile menu visibility
+const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Function to toggle mobile menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="bg-white shadow-lg w-full relative">
+    <nav className="bg-white shadow-lg w-full sticky top-0 z-50">
       <div className="w-full py-4 px-6 flex items-center justify-between md:justify-center">
         {/* Logo */}
         <Link to="/">
           <img src={Logo} alt="Logo" className="h-28" />
         </Link>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu button */}
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
@@ -47,11 +45,11 @@ const Navbar = () => {
       <div
         className={`fixed top-0 right-0 bg-white z-50 transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden`} // Ensure mobile menu is only visible on small screens
-        style={{ width: "100vw" }} // Set full width for mobile menu
+        } md:hidden`}
+        style={{ width: "100vw" }}
       >
         <div className="flex flex-col items-center space-y-4 py-4 mt-20 relative">
-          {/* Close Button */}
+          {/* Close button */}
           <button
             onClick={toggleMenu}
             className="absolute top-4 right-4 text-gray-500 focus:outline-none"
@@ -73,30 +71,26 @@ const Navbar = () => {
           </button>
 
           <Link
-            to="/"
+            to={"/"}
             className="text-xl text-customDarkOrange hover:text-customOrange"
-            onClick={() => setIsMenuOpen(false)}
           >
             Our Hotel
           </Link>
-          <Link
-            to="/"
+          <a
+            href="/?#facilities"
             className="text-xl text-customDarkOrange hover:text-customOrange"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Rooms & Rates
-          </Link>
-          <Link
-            to="/"
-            className="text-xl text-customDarkOrange hover:text-customOrange"
-            onClick={() => setIsMenuOpen(false)}
           >
             Facilities
-          </Link>
-          <Link
-            to="/"
+          </a>
+          <a
+            href="/?#roomrate"
             className="text-xl text-customDarkOrange hover:text-customOrange"
-            onClick={() => setIsMenuOpen(false)}
+          >
+            Rooms & Rates
+          </a>
+          <Link
+            to={"/contact-us"}
+            className="text-xl text-customDarkOrange hover:text-customOrange"
           >
             Contact Us
           </Link>
@@ -118,44 +112,44 @@ const Navbar = () => {
       </div>
 
       {/* Primary Navbar items */}
-      <div className="hidden md:flex md:justify-center md:space-x-8">
+      <div className="hidden md:flex md:justify-center md:space-x-8 md:pb-6">
         <Link
-          to="/"
-          className="text-xl text-customDarkOrange hover:text-customOrange"
+          to={"/"}
+          className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Our Hotel
         </Link>
-        <Link
-          to="/"
-          className="text-xl text-customDarkOrange hover:text-customOrange"
-        >
-          Rooms & Rates
-        </Link>
-        <Link
-          to="/"
-          className="text-xl text-customDarkOrange hover:text-customOrange"
+        <a
+          href="/?#facilities"
+          className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Facilities
-        </Link>
+        </a>
+        <a
+          href="/?#roomrate"
+          className="text-2xl text-customDarkOrange hover:text-customOrange"
+        >
+          Rooms & Rates
+        </a>
         <Link
-          to="/"
-          className="text-xl text-customDarkOrange hover:text-customOrange"
+          to={"/contact-us"}
+          className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Contact Us
         </Link>
       </div>
 
       {/* Secondary Navbar items */}
-      <div className="hidden md:flex md:absolute md:right-0 md:space-x-2 md:pr-6">
+      <div className="hidden md:flex md:absolute md:right-0 md:bottom-0 md:space-x-2 md:pr-6  md:pb-6">
         <Link
           to="/login"
-          className="py-2 px-4 font-medium text-gray-500 rounded hover:bg-gray-200 transition duration-300"
+          className="py-2 px-4 font-medium text-gray-500 rounded hover:bg-customOrange hover:text-white transition duration-300"
         >
           Log In
         </Link>
         <Link
           to="/signup"
-          className="py-2 px-4 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300"
+          className="py-2 px-4 font-medium text-white bg-customOrange rounded hover:bg-customDarkOrange transition duration-300"
         >
           Sign Up
         </Link>

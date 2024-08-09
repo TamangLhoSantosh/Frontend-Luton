@@ -23,7 +23,7 @@ const facilities = [
 
 const FacilitiesComponent = () => {
   return (
-    <>
+    <div id="facilities">
       <p className="text-5xl text-center text-customDarkOrange font-semibold pt-10 pb-20">
         Facilities
       </p>
@@ -38,7 +38,7 @@ const FacilitiesComponent = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

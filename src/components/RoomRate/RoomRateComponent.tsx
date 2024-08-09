@@ -29,7 +29,7 @@ const roomDetails = [
 
 const RoomRateComponent = () => {
   return (
-    <div>
+    <div id="roomrate">
       <p className="text-customDarkOrange text-5xl text-center font-semibold my-20">
         Rooms & Rates
       </p>
