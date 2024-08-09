@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/luton-hotel-high-resolution-logo-transparent.png";
+import Logo from "../../assets/logo.png";
 
 const Navbar = () => {
   // State to manage mobile menu visibility
