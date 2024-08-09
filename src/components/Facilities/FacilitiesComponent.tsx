@@ -29,7 +29,10 @@ const FacilitiesComponent = () => {
       </p>
       <div className="flex container mx-auto justify-around">
         {facilities.map((facility) => (
-          <div className="flex flex-col justify-center items-center text-customDarkOrange">
+          <div
+            className="flex flex-col justify-center items-center text-customDarkOrange"
+            key={facility.name}
+          >
             {facility.icon}
             <p className="text-2xl my-4">{facility.name}</p>
           </div>
