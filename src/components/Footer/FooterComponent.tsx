@@ -1,5 +1,5 @@
 import { FormEventHandler, useState } from "react";
-import Logo from "../../assets/footerlogo.png";
+import Logo from "../../assets/luton-hotel-high-resolution-logo-transparent.png";
 
 const FooterComponent = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const FooterComponent = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 bg-black text-white pb-20 pt-10">
       <div className="p-10 pb-20">
-        <img src={Logo} alt="Logo" />
+        <img src={Logo} alt="Logo" className="h-56" />
         <p className="ps-5 text-2xl font-bold">Luton Hotel Head Office</p>
         <p className="ps-5 text-2xl">+21 434 344 432</p>
         <p className="ps-5 text-2xl">info@lutonhotel.com</p>
