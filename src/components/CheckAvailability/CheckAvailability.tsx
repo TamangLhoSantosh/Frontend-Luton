@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const CheckAvailability = () => {
   // State to store the minimum check-in and check-out date
@@ -9,8 +8,8 @@ const CheckAvailability = () => {
 
   // State to store the form data
   const [formData, setFormData] = useState({
-    checkIn: "",
-    checkOut: "",
+    checkInDate: "",
+    checkOutDate: "",
     roomType: "",
   });
 
@@ -27,7 +26,7 @@ const CheckAvailability = () => {
   // Handle date change
   const handleDateChange = (
     date: Date | null,
-    type: "checkIn" | "checkOut"
+    type: "checkInDate" | "checkOutDate"
   ) => {
     setFormData({
       ...formData,
@@ -37,10 +36,12 @@ const CheckAvailability = () => {
 
   // Validate form
   const validate = () => {
-    if (!formData.checkIn || !formData.checkOut || !formData.roomType) {
+    if (!formData.checkInDate || !formData.checkOutDate || !formData.roomType) {
       alert("Please fill in all the fields");
       return false;
-    } else if (new Date(formData.checkIn) >= new Date(formData.checkOut)) {
+    } else if (
+      new Date(formData.checkInDate) >= new Date(formData.checkOutDate)
+    ) {
       alert("Check-out date must be greater than check-in date");
       return false;
     }
@@ -51,6 +52,7 @@ const CheckAvailability = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
+    console.log("Form data:", formData);
   };
 
   useEffect(() => {
@@ -62,12 +64,12 @@ const CheckAvailability = () => {
     setMinCheckOutDate(tomorrow);
 
     // Update the minimum check-out date based on the check-in date
-    if (formData.checkIn) {
-      let chekout = new Date(formData.checkIn);
+    if (formData.checkInDate) {
+      let chekout = new Date(formData.checkInDate);
       chekout.setDate(chekout.getDate() + 1);
       setMinCheckOutDate(chekout);
     }
-  }, [formData.checkIn]);
+  }, [formData.checkInDate]);
 
   return (
     <form
@@ -76,18 +78,20 @@ const CheckAvailability = () => {
       className="flex justify-center items-center bg-black h-32 p-4 shadow-lg space-x-4 font-ubuntu"
     >
       <DatePicker
-        selected={formData.checkIn ? new Date(formData.checkIn) : null}
+        selected={formData.checkInDate ? new Date(formData.checkInDate) : null}
         minDate={minCheckInDate}
         className="text-xl px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
         placeholderText="Check In"
-        onChange={(date) => handleDateChange(date, "checkIn")}
+        onChange={(date) => handleDateChange(date, "checkInDate")}
       />
       <DatePicker
-        selected={formData.checkOut ? new Date(formData.checkOut) : null}
+        selected={
+          formData.checkOutDate ? new Date(formData.checkOutDate) : null
+        }
         minDate={minCheckOutDate}
         className="text-xl px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
         placeholderText="Check Out"
-        onChange={(date) => handleDateChange(date, "checkOut")}
+        onChange={(date) => handleDateChange(date, "checkOutDate")}
       />
       <select
         name="roomType"

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { contactSchema } from "../../config/AuthFormikSchema";
 
-const ContactUsPage: React.FC = () => {
+const ContactUsComponent: React.FC = () => {
   const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
 
   const formik = useFormik({
@@ -99,4 +98,4 @@ const ContactUsPage: React.FC = () => {
   );
 };
 
-export default ContactUsPage;
+export default ContactUsComponent;

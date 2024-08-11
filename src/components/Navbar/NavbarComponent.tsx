@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.png";
+import { ContextProvider } from "../../hooks/ContextProvider";
+import ProfileInfo from "./ProfileInfo";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const [showProfile, setShowProfile] = useState(false);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const { user } = useContext(ContextProvider);
 
   const handleScroll = () => {
     let currentScroll = window.scrollY;
@@ -168,18 +174,34 @@ const Navbar: React.FC = () => {
 
       {/* Secondary Navbar items */}
       <div className="hidden md:flex md:absolute md:right-0 md:bottom-0 md:space-x-2 md:pr-6 md:pb-6 font-ubuntu">
-        <Link
-          to="/login"
-          className="py-2 px-4 font-medium text-gray-500 rounded hover:bg-customOrange hover:text-white transition duration-300"
-        >
-          Log In
-        </Link>
-        <Link
-          to="/signup"
-          className="py-2 px-4 font-medium text-white bg-customOrange rounded hover:bg-customDarkOrange transition duration-300"
-        >
-          Sign Up
-        </Link>
+        {user == null ? (
+          <div>
+            <Link
+              to="/login"
+              className="py-2 px-4 font-medium text-gray-500 rounded hover:bg-customOrange hover:text-white transition duration-300"
+            >
+              Log In
+            </Link>
+            <Link
+              to="/signup"
+              className="py-2 px-4 font-medium text-white bg-customOrange rounded hover:bg-customDarkOrange transition duration-300"
+            >
+              Sign Up
+            </Link>
+          </div>
+        ) : (
+          <div
+            onClick={() => setShowProfile(!showProfile)}
+            className={`cursor-pointer w-10 text-center p-1   ${
+              showProfile
+                ? "hover:shadow-md translate-y-1 scale-105 transition-all ease-in-out"
+                : ""
+            }`}
+          >
+            <img src="" alt="profile" className="w-10 object-cover" />
+          </div>
+        )}
+        {showProfile && <ProfileInfo user={user} />}
       </div>
     </nav>
   );

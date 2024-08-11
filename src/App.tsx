@@ -4,7 +4,10 @@ import HomeComponent from "./components/Home/HomeComponent";
 import FooterComponent from "./components/Footer/FooterComponent";
 import LoginComponent from "./components/Login/LoginComponent";
 import SignupComponent from "./components/Signup/SignupComponent";
-import ContactUsPage from "./components/ContactUs/ContactUsComponent";
+import ContactUsComponent from "./components/ContactUs/ContactUsComponent";
+import BookNowComponent from "./components/BookNow/BookNowComponent";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
   return (
@@ -14,7 +17,8 @@ function App() {
         <Route path="/" element={<HomeComponent />} />
         <Route path="/login" element={<LoginComponent />} />
         <Route path="/signup" element={<SignupComponent />} />
-        <Route path="/contactus" element={<ContactUsPage />} />
+        <Route path="/contactus" element={<ContactUsComponent />} />
+        <Route path="/booknow" element={<BookNowComponent />} />
       </Routes>
       <FooterComponent />
     </BrowserRouter>

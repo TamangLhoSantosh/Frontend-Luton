@@ -3,7 +3,7 @@ import CheckAvailability from "../CheckAvailability/CheckAvailability";
 import HeroSectionComponent from "../HeroSection/HeroSectionComponent";
 import FacilitiesComponent from "../Facilities/FacilitiesComponent";
 import RoomRateComponent from "../RoomRate/RoomRateComponent";
-import BookNowComponent from "../BookNow/BookNowComponent";
+import BookNowButton from "../BookNow/BookNowButton";
 
 const HomeComponent: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const HomeComponent: React.FC = () => {
       <div className="container mx-auto -translate-y-40 bg-white rounded-xl">
         <FacilitiesComponent />
         <RoomRateComponent />
-        <BookNowComponent />
+        <BookNowButton />
       </div>
     </div>
   );
