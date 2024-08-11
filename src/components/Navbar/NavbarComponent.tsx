@@ -1,19 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleScroll = () => {
+    let currentScroll = window.scrollY;
+    if (currentScroll > 0) {
+      // If the page is scrolled
+      setIsScrolled(true);
+    } else {
+      // If scroll is less than or equal to the threshold
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <nav className="bg-white shadow-lg w-full sticky top-0 z-50">
       <div className="w-full py-4 px-6 flex items-center justify-between md:justify-center">
         {/* Logo */}
-        <Link to="/">
+        <Link to="/" className={`${isScrolled ? "hidden" : "block"}`}>
           <img src={Logo} alt="Logo" className="h-28" />
         </Link>
 
@@ -77,13 +94,13 @@ const Navbar: React.FC = () => {
             Our Hotel
           </Link>
           <a
-            href="/?#facilities"
+            href="/#facilities"
             className="text-xl text-customDarkOrange hover:text-customOrange"
           >
             Facilities
           </a>
           <a
-            href="/?#roomrate"
+            href="/#roomrate"
             className="text-xl text-customDarkOrange hover:text-customOrange"
           >
             Rooms & Rates
@@ -111,6 +128,16 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
+      {/* Logo */}
+      <Link
+        to="/"
+        className={`absolute bottom-0 left-0 pl-10 pb-3 ${
+          isScrolled ? "block" : "hidden"
+        }`}
+      >
+        <img src={Logo} alt="Logo" className="h-16 mb-" />
+      </Link>
+
       {/* Primary Navbar items */}
       <div className="hidden md:flex md:justify-center md:space-x-8 md:pb-6 font-ubuntu">
         <Link
@@ -120,13 +147,13 @@ const Navbar: React.FC = () => {
           Our Hotel
         </Link>
         <a
-          href="/?#facilities"
+          href="/#facilities"
           className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Facilities
         </a>
         <a
-          href="/?#roomrate"
+          href="/#roomrate"
           className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Rooms & Rates
