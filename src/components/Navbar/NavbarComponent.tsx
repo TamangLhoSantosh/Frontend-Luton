@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
           </button>
 
           <Link
-            to={"/"}
+            to="/"
             className="text-xl text-customDarkOrange hover:text-customOrange"
           >
             Our Hotel
@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
             Rooms & Rates
           </a>
           <Link
-            to={"/contact-us"}
+            to="/contactus"
             className="text-xl text-customDarkOrange hover:text-customOrange"
           >
             Contact Us
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
       {/* Primary Navbar items */}
       <div className="hidden md:flex md:justify-center md:space-x-8 md:pb-6 font-ubuntu">
         <Link
-          to={"/"}
+          to="/"
           className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Our Hotel
@@ -159,7 +159,7 @@ const Navbar: React.FC = () => {
           Rooms & Rates
         </a>
         <Link
-          to={"/contact-us"}
+          to="/contactus"
           className="text-2xl text-customDarkOrange hover:text-customOrange"
         >
           Contact Us

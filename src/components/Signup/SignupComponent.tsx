@@ -67,27 +67,27 @@ const SignupComponent = () => {
             Discover, Book, Enjoy – Effortlessly
           </p>
         </div>
-        <div className="mt-4 flex justify-center">
-          <img
-            src={avatarPreview ?? "https://via.placeholder.com/150"}
-            alt="Avatar Preview"
-            className="w-32 h-32 object-cover rounded-full border border-gray-300"
-          />
-        </div>
-        <div className="w-full">
-          <label className="ml-1 text-gray-500" htmlFor="avatar">
-            Avatar
-          </label>
-          <input
-            id="avatar"
-            name="avatar"
-            type="file"
-            onChange={handleFileChange}
-            onBlur={formik.handleBlur}
-            className="mt-1 file:mr-3 w-full file:py-2 file:px-4 file:rounded-md file:border-0 text-sm border rounded-md file:bg-black file:text-white shadow-md hover:bg-gray-200"
-          />
-        </div>
         <form onSubmit={formik.handleSubmit} className="space-y-4 p-2">
+          <div className="mt-4 flex justify-center">
+            <img
+              src={avatarPreview ?? "https://via.placeholder.com/150"}
+              alt="Avatar Preview"
+              className="w-32 h-32 object-cover rounded-full border border-gray-300"
+            />
+          </div>
+          <div className="w-full">
+            <label className="ml-1 text-gray-500" htmlFor="avatar">
+              Avatar
+            </label>
+            <input
+              id="avatar"
+              name="avatar"
+              type="file"
+              onChange={handleFileChange}
+              onBlur={formik.handleBlur}
+              className="mt-1 file:mr-3 w-full file:py-2 file:px-4 file:rounded-md file:border-0 text-sm border rounded-md file:bg-black file:text-white shadow-md hover:bg-gray-200"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextField
               id="fullName"
