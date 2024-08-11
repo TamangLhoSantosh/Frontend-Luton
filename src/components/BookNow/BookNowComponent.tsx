@@ -1,7 +1,9 @@
 import { TextField } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import { ContextProvider } from "../../hooks/ContextProvider";
+import axiosClient from "../../config/axiosClient";
 
 interface BookingFormData {
   guestName: string;
@@ -15,6 +17,18 @@ interface BookingFormData {
 const BookNowComponent: React.FC = () => {
   const [minCheckInDate, setMinCheckInDate] = useState(new Date());
   const [minCheckOutDate, setMinCheckOutDate] = useState(new Date());
+
+  const [roomTypes, setRoomTypes] = useState([
+    {
+      _id: "",
+      roomTypes: "",
+      pricePerNight: "",
+    },
+  ]);
+
+  // const [selectedRoomType, setSelectedRoomType] = useState("");
+
+  const { user } = useContext(ContextProvider);
 
   const formik = useFormik<BookingFormData>({
     initialValues: {
@@ -31,22 +45,45 @@ const BookNowComponent: React.FC = () => {
     },
   });
 
-  // State to store the per night rate
-  const [perNightRate, setPerNightRate] = useState(100);
+  // Get Room Types
+  const getRoomTypes = async () => {
+    try {
+      const response = await axiosClient.get("/roomType");
+      setRoomTypes(response.data);
+    } catch (e: any) {
+      console.log("An error occurred.");
+    }
+  };
+  useEffect(() => {
+    getRoomTypes();
+  }, []);
 
   // Calculate total amount
-  useEffect(() => {
-    if (formik.values.checkInDate && formik.values.checkOutDate) {
+  const calculateTotalAmount = () => {
+    const { checkInDate, checkOutDate } = formik.values;
+
+    if (checkInDate && checkOutDate) {
       const diffTime =
-        Math.abs(
-          formik.values.checkOutDate.getTime() -
-            formik.values.checkInDate.getTime()
-        ) /
+        Math.abs(checkOutDate.getTime() - checkInDate.getTime()) /
         (1000 * 60 * 60 * 24);
-      const total = diffTime * perNightRate;
+      const room = roomTypes.find(
+        (room) => room._id === formik.values.roomType
+      );
+      const rate = room ? Number(room.pricePerNight) : 0;
+      const total = diffTime * rate;
       formik.setFieldValue("total", total.toFixed(2));
+    } else {
+      formik.setFieldValue("total", "");
     }
-  }, [formik.values.checkInDate, formik.values.checkOutDate]);
+  };
+
+  useEffect(() => {
+    calculateTotalAmount();
+  }, [
+    formik.values.checkInDate,
+    formik.values.checkOutDate,
+    formik.values.roomType,
+  ]);
 
   useEffect(() => {
     // Set the minimum check-in date to tomorrow
@@ -66,49 +103,63 @@ const BookNowComponent: React.FC = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg my-20">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Book Your Stay</h1>
+      <p className="text-3xl font-bold mb-6 text-customOrange">
+        Book Your Stay
+      </p>
       <form onSubmit={formik.handleSubmit} className="space-y-6">
-        <TextField
-          autoComplete="guestName"
-          type="text"
-          id="guestName"
-          name="guestName"
-          label="Full Name"
-          value={formik.values.guestName}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.guestName && Boolean(formik.errors.guestName)}
-          helperText={formik.touched.guestName && formik.errors.guestName}
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
-          required
-        />
-        <TextField
-          type="email"
-          id="guestEmail"
-          name="guestEmail"
-          label="Email"
-          value={formik.values.guestEmail}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.guestEmail && Boolean(formik.errors.guestEmail)}
-          helperText={formik.touched.guestEmail && formik.errors.guestEmail}
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
-          required
-        />
-        <TextField
-          type="tel"
-          id="guestPhone"
-          name="guestPhone"
-          label="Contact Number"
-          value={formik.values.guestPhone}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.guestPhone && Boolean(formik.errors.guestPhone)}
-          helperText={formik.touched.guestPhone && formik.errors.guestPhone}
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
-          required
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 space-y-2">
+        {user.fullName ? (
+          <></>
+        ) : (
+          <>
+            <TextField
+              autoComplete="guestName"
+              type="text"
+              id="guestName"
+              name="guestName"
+              label="Full Name"
+              value={formik.values.guestName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.guestName && Boolean(formik.errors.guestName)
+              }
+              helperText={formik.touched.guestName && formik.errors.guestName}
+              className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
+              required
+            />
+            <TextField
+              type="email"
+              id="guestEmail"
+              name="guestEmail"
+              label="Email"
+              value={formik.values.guestEmail}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.guestEmail && Boolean(formik.errors.guestEmail)
+              }
+              helperText={formik.touched.guestEmail && formik.errors.guestEmail}
+              className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
+              required
+            />
+            <TextField
+              type="tel"
+              id="guestPhone"
+              name="guestPhone"
+              label="Contact Number"
+              value={formik.values.guestPhone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.guestPhone && Boolean(formik.errors.guestPhone)
+              }
+              helperText={formik.touched.guestPhone && formik.errors.guestPhone}
+              className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
+              required
+            />
+          </>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 space-y-2 items-end">
           <div>
             <label
               htmlFor="checkInDate"
@@ -160,10 +211,11 @@ const BookNowComponent: React.FC = () => {
             <option value="" disabled>
               Select a Room Type
             </option>
-            <option value="twin">Twin Room</option>
-            <option value="single">Single Room</option>
-            <option value="delux">Delux Room</option>
-            <option value="suite">Suite Room</option>
+            {roomTypes.map((roomType: any) => (
+              <option key={roomType._id} value={roomType._id}>
+                {roomType.roomType}
+              </option>
+            ))}
           </select>
         </div>
         <TextField

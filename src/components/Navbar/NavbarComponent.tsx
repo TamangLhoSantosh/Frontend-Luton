@@ -174,7 +174,7 @@ const Navbar: React.FC = () => {
 
       {/* Secondary Navbar items */}
       <div className="hidden md:flex md:absolute md:right-0 md:bottom-0 md:space-x-2 md:pr-6 md:pb-6 font-ubuntu">
-        {user == null ? (
+        {user.fullName === "" ? (
           <div>
             <Link
               to="/login"
@@ -198,10 +198,16 @@ const Navbar: React.FC = () => {
                 : ""
             }`}
           >
-            <img src="" alt="profile" className="w-10 object-cover" />
+            <img
+              src={user.profileImage ?? "https://via.placeholder.com/150"}
+              alt="profile"
+              className="w-10 object-cover"
+            />
           </div>
         )}
-        {showProfile && <ProfileInfo user={user} />}
+        {showProfile && (
+          <ProfileInfo user={user} setShowProfile={setShowProfile} />
+        )}
       </div>
     </nav>
   );

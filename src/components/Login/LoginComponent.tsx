@@ -1,30 +1,65 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosClient from "../../config/axiosClient";
+import { ContextProvider } from "../../hooks/ContextProvider";
+import { toast, ToastContainer } from "react-toastify";
+
 const SignIn = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState({
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
 
+  // Set user in context
+  const { setUser } = useContext(ContextProvider);
+
+  // Handle change
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle submit
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(data);
+    try {
+      let response;
+      // If email
+      if (data.username.includes("@")) {
+        response = await axiosClient.post("/auth/login", {
+          email: data.username,
+          password: data.password,
+        });
+      }
+      // If username
+      else {
+        response = await axiosClient.post("/auth/login", data);
+      }
+      if (response.status === 200) {
+        setUser(response.data.user);
+        localStorage.setItem("token", response.data.token);
+        toast.success("Logged in successfully");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } else {
+        toast.error(response.data.message ?? "An unexpected error occurred");
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.message);
+    }
   };
 
   return (
     <div className="background flex justify-center text-black items-center my-20 min-h-screen">
       <div className="bg-sign-in max-w-md w-[90%]  justify-start bg-white flex flex-col gap-5 rounded-lg shadow-lg p-5">
         <div className="flex justify-center flex-col items-center p-4">
-          <h1 className="text-customDarkOrange hover:bg-customOrange text-3xl font-bold w-full p-3 rounded-b-lg text-center">
+          <h1 className="text-customDarkOrange hover:text-customOrange text-3xl font-bold w-full p-3 rounded-b-lg text-center">
             Sign In
           </h1>
           <p className="text-xl text-center  text-customOrange">
@@ -93,6 +128,7 @@ const SignIn = () => {
           </Link>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

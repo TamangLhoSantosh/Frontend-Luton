@@ -2,7 +2,17 @@ import { createContext, useState } from "react";
 
 // Create contexts for role and role update
 export const ContextProvider = createContext({
-  user: null,
+  user: {
+    address: "",
+    dateOfBirth: "",
+    email: "",
+    fullName: "",
+    gender: "",
+    phoneNumber: "",
+    profileImage: "",
+    role: "",
+    username: "",
+  },
   setUser: (user: any) => {},
 });
 
@@ -10,7 +20,17 @@ export const ContextProvider = createContext({
 import { ReactNode } from "react";
 
 export function ContextApp({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState(null); // State for auth
+  const [user, setUser] = useState({
+    address: "",
+    dateOfBirth: "",
+    email: "",
+    fullName: "",
+    gender: "",
+    phoneNumber: "",
+    profileImage: "",
+    role: "",
+    username: "",
+  }); // State for auth
   return (
     <ContextProvider.Provider
       value={{

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import axiosClient from "../../config/axiosClient";
+import { toast, ToastContainer } from "react-toastify";
 
 const CheckAvailability = () => {
   // State to store the minimum check-in and check-out date
   const [minCheckInDate, setMinCheckInDate] = useState(new Date());
   const [minCheckOutDate, setMinCheckOutDate] = useState(new Date());
+
+  const [roomTypes, setRoomTypes] = useState([]);
 
   // State to store the form data
   const [formData, setFormData] = useState({
@@ -49,11 +53,34 @@ const CheckAvailability = () => {
   };
 
   // Handle submit
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validate()) return;
-    console.log("Form data:", formData);
+    try {
+      if (!validate()) return;
+      const response = await axiosClient.post(
+        "/booking/check-availability",
+        formData
+      );
+      console.log(response);
+    } catch (e: any) {
+      toast.error(e.response.data.error);
+    }
   };
+
+  // Get Room Types
+  const getRoomTypes = async () => {
+    try {
+      const response = await axiosClient.get("/roomType");
+      console.log(response);
+      setRoomTypes(response.data);
+    } catch (e: any) {
+      console.log(e.response.data.error);
+    }
+  };
+
+  useEffect(() => {
+    getRoomTypes();
+  }, []);
 
   useEffect(() => {
     // Set the minimum check-in date to tomorrow
@@ -102,10 +129,11 @@ const CheckAvailability = () => {
         <option value="" disabled>
           Select Room Type
         </option>
-        <option value="twin">Twin Room</option>
-        <option value="single">Single Room</option>
-        <option value="delux">Delux Room</option>
-        <option value="suite">Suite Room</option>
+        {roomTypes.map((roomType: any) => (
+          <option key={roomType._id} value={roomType._id}>
+            {roomType.roomType}
+          </option>
+        ))}
       </select>
       <button
         type="submit"
@@ -113,6 +141,7 @@ const CheckAvailability = () => {
       >
         Check Availability
       </button>
+      <ToastContainer />
     </form>
   );
 };

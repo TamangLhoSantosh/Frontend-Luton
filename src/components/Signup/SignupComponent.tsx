@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import { authStoreSchema } from "../../config/AuthFormikSchema";
 import axiosClient from "../../config/axiosClient";
 import { ToastContainer, toast } from "react-toastify";
+import { set } from "react-datepicker/dist/date_utils";
 
 const SignupComponent = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -41,14 +42,20 @@ const SignupComponent = () => {
       profileImage: values.profileImage ? values.profileImage : "",
     };
     try {
-      const response = await axiosClient.post("/user", formattedValues, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosClient.post(
+        "/auth/register",
+        formattedValues,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.status === 201) {
         toast.success("User created successfully");
-        navigate("/login");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       } else {
         toast.error(
           response.data.error ??
@@ -164,9 +171,6 @@ const SignupComponent = () => {
                 error={formik.touched.gender && Boolean(formik.errors.gender)}
                 autoComplete="gender"
               >
-                <MenuItem value="">
-                  <em>Select Gender</em>
-                </MenuItem>
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
                 <MenuItem value="Others">Others</MenuItem>
