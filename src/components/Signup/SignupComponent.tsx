@@ -1,18 +1,21 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useFormik } from "formik";
 import { authStoreSchema } from "../../config/AuthFormikSchema";
+import axiosClient from "../../config/axiosClient";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignupComponent = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [showPass, setShowPass] = useState(false);
   const [showConPass, setShowConPass] = useState(false);
+  const navigate = useNavigate();
 
   const data = {
     fullName: "",
@@ -25,26 +28,44 @@ const SignupComponent = () => {
     password: "",
     confirmPassword: "",
     birthDate: { format: (arg0: string) => Date },
-    avatar: null,
+    profileImage: "",
   };
 
   const handleSubmit = async (values: {
     birthDate: { format: (arg0: string) => any };
-    avatar: any;
+    profileImage: any;
   }) => {
     const formattedValues = {
       ...values,
       birthDate: values.birthDate ? values.birthDate.format("YYYY-MM-DD") : "",
-      avatar: values.avatar ? values.avatar : "",
+      profileImage: values.profileImage ? values.profileImage : "",
     };
-    console.log(formattedValues);
+    try {
+      const response = await axiosClient.post("/user", formattedValues, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.status === 201) {
+        toast.success("User created successfully");
+        navigate("/login");
+      } else {
+        toast.error(
+          response.data.error ??
+            response.data.message ??
+            "An unknown error occurred"
+        );
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.error);
+    }
   };
 
   // Handle file change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
     if (file) {
-      formik.setFieldValue("avatar", file);
+      formik.setFieldValue("profileImage", file);
       const fileUrl = URL.createObjectURL(file);
       setAvatarPreview(fileUrl);
     }
@@ -76,12 +97,12 @@ const SignupComponent = () => {
             />
           </div>
           <div className="w-full">
-            <label className="ml-1 text-gray-500" htmlFor="avatar">
+            <label className="ml-1 text-gray-500" htmlFor="profileImage">
               Avatar
             </label>
             <input
-              id="avatar"
-              name="avatar"
+              id="profileImage"
+              name="profileImage"
               type="file"
               onChange={handleFileChange}
               onBlur={formik.handleBlur}
@@ -264,6 +285,17 @@ const SignupComponent = () => {
           </div>
         </form>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

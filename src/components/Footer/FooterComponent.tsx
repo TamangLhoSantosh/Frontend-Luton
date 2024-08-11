@@ -29,8 +29,8 @@ const FooterComponent = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="text"
-            name="email"
-            id="email"
+            name="email1"
+            id="email1"
             value={email}
             placeholder="Email Address"
             onChange={(e) => setEmail(e.target.value)}

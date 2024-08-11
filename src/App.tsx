@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import NavbarComponent from "./components/Navbar/NavbarComponent";
 import HomeComponent from "./components/Home/HomeComponent";
 import FooterComponent from "./components/Footer/FooterComponent";
@@ -8,21 +8,48 @@ import ContactUsComponent from "./components/ContactUs/ContactUsComponent";
 import BookNowComponent from "./components/BookNow/BookNowComponent";
 
 import "react-datepicker/dist/react-datepicker.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <BrowserRouter>
       <NavbarComponent />
       <Routes>
-        <Route path="/" element={<HomeComponent />} />
-        <Route path="/login" element={<LoginComponent />} />
-        <Route path="/signup" element={<SignupComponent />} />
-        <Route path="/contactus" element={<ContactUsComponent />} />
-        <Route path="/booknow" element={<BookNowComponent />} />
+        <Route
+          path="/"
+          element={<PageWrapper component={<HomeComponent />} />}
+        />
+        <Route
+          path="/login"
+          element={<PageWrapper component={<LoginComponent />} />}
+        />
+        <Route
+          path="/signup"
+          element={<PageWrapper component={<SignupComponent />} />}
+        />
+        <Route
+          path="/contactus"
+          element={<PageWrapper component={<ContactUsComponent />} />}
+        />
+        <Route
+          path="/booknow"
+          element={<PageWrapper component={<BookNowComponent />} />}
+        />
       </Routes>
-      <FooterComponent />
     </BrowserRouter>
   );
 }
+
+const PageWrapper = ({ component }: { component: JSX.Element }) => {
+  const location = useLocation();
+  const hideFooter = ["/login", "/signup"].includes(location.pathname);
+
+  return (
+    <>
+      {component}
+      {!hideFooter && <FooterComponent />}
+    </>
+  );
+};
 
 export default App;

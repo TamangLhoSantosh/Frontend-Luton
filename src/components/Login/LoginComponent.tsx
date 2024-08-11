@@ -21,7 +21,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="background flex justify-center text-black items-center my-20">
+    <div className="background flex justify-center text-black items-center my-20 min-h-screen">
       <div className="bg-sign-in max-w-md w-[90%]  justify-start bg-white flex flex-col gap-5 rounded-lg shadow-lg p-5">
         <div className="flex justify-center flex-col items-center p-4">
           <h1 className="text-customDarkOrange hover:bg-customOrange text-3xl font-bold w-full p-3 rounded-b-lg text-center">
