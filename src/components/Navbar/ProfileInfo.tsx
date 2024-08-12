@@ -41,7 +41,7 @@ const ProfileInfo = ({ user, setShowProfile }: ProfileInfoProps) => {
         <div className="flex items-center gap-3">
           <img
             src={user.profileImage ?? "https://via.placeholder.com/150"}
-            className="w-12 h-12 object-cover"
+            className="w-16 h-16 rounded-full object-cover"
             alt="profile-image"
             onClick={closeProfile}
           />

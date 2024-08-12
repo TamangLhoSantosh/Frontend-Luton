@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 // Create contexts for role and role update
 export const ContextProvider = createContext({
@@ -31,6 +31,13 @@ export function ContextApp({ children }: { children: ReactNode }) {
     role: "",
     username: "",
   }); // State for auth
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
   return (
     <ContextProvider.Provider
       value={{

@@ -192,16 +192,14 @@ const Navbar: React.FC = () => {
         ) : (
           <div
             onClick={() => setShowProfile(!showProfile)}
-            className={`cursor-pointer w-10 text-center p-1   ${
-              showProfile
-                ? "hover:shadow-md translate-y-1 scale-105 transition-all ease-in-out"
-                : ""
+            className={`cursor-pointer w-10 h-10 rounded-full text-center overflow-hidden ${
+              showProfile ? "hover:shadow-md transition-all ease-in-out" : ""
             }`}
           >
             <img
               src={user.profileImage ?? "https://via.placeholder.com/150"}
               alt="profile"
-              className="w-10 object-cover"
+              className="w-10 h-10 rounded-full object-cover"
             />
           </div>
         )}

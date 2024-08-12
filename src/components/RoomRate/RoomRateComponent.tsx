@@ -13,7 +13,7 @@ const roomDetails = [
       "Enjoy an amazing stay in our cozy & comfortable standard twin rooms. It comes with single, double & twin bed including 43” Smart LED TV, bathtub & independent high speed Wi-Fi.",
     description:
       "The Luton Hotel offers freshly refurnished rooms and suites all with attached bath and shower, air conditioning and heating, International Direct Dial Telephone system, multi Channel color television and mini bar. All rooms have a view over our awards wining gardens or our refreshing swimming pools.",
-    fetures: {
+    features: {
       roomSize: "287.3 sq. ft.",
       bedType: "King Size, Double & Twin",
       Occupancy: "Up to 2 people",

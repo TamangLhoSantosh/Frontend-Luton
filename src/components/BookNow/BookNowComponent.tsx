@@ -26,20 +26,30 @@ const BookNowComponent: React.FC = () => {
     },
   ]);
 
-  // const [selectedRoomType, setSelectedRoomType] = useState("");
-
   const { user } = useContext(ContextProvider);
 
+  const data: BookingFormData = user
+    ? {
+        guestName: "sadf",
+        guestEmail: "sdf",
+        guestPhone: "sadf",
+        checkInDate: null,
+        checkOutDate: null,
+        roomType: "",
+        total: "",
+      }
+    : {
+        guestName: "",
+        guestEmail: "",
+        guestPhone: "",
+        checkInDate: null,
+        checkOutDate: null,
+        roomType: "",
+        total: "",
+      };
+
   const formik = useFormik<BookingFormData>({
-    initialValues: {
-      guestName: "",
-      guestEmail: "",
-      guestPhone: "",
-      checkInDate: null,
-      checkOutDate: null,
-      roomType: "",
-      total: "",
-    },
+    initialValues: data,
     onSubmit: (values) => {
       console.log("Booking data:", values);
     },

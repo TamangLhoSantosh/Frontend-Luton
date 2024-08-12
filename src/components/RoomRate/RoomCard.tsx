@@ -18,7 +18,7 @@ interface Props {
 const RoomCard = ({ link, state }: Props) => {
   return (
     <div
-      className="flex flex-col items-center bg-cover bg-center rounded-lg p-6"
+      className="flex justify-center items-end bg-cover bg-center rounded-lg h-56 md:h-[500px]"
       style={{ backgroundImage: `url(${state.image})` }}
     >
       <div className="flex flex-col items-center pb-6">

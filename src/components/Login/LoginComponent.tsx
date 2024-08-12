@@ -43,6 +43,7 @@ const SignIn = () => {
       if (response.status === 200) {
         setUser(response.data.user);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data.user);
         toast.success("Logged in successfully");
         setTimeout(() => {
           navigate("/");
