@@ -6,6 +6,7 @@ import LoginComponent from "./components/Login/LoginComponent";
 import SignupComponent from "./components/Signup/SignupComponent";
 import ContactUsComponent from "./components/ContactUs/ContactUsComponent";
 import BookNowComponent from "./components/BookNow/BookNowComponent";
+import RoomDetails from "./components/RoomRate/RoomDetail";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <BrowserRouter>
-      <NavbarComponent />
       <Routes>
         <Route
           path="/"
@@ -35,6 +35,10 @@ function App() {
           path="/booknow"
           element={<PageWrapper component={<BookNowComponent />} />}
         />
+        <Route
+          path="/room/:roomType"
+          element={<PageWrapper component={<RoomDetails />} />}
+        />
       </Routes>
     </BrowserRouter>
   );
@@ -46,6 +50,7 @@ const PageWrapper = ({ component }: { component: JSX.Element }) => {
 
   return (
     <>
+      <NavbarComponent />
       {component}
       {!hideFooter && <FooterComponent />}
     </>
