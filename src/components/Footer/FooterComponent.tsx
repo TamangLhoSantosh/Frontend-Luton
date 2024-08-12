@@ -1,12 +1,31 @@
 import { FormEventHandler, useState } from "react";
 import Logo from "../../assets/logo.png";
+import axiosClient from "../../config/axiosClient";
+import { toast, ToastContainer } from "react-toastify";
 
 const FooterComponent = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  // Validate email
+  const validateEmail = (email: string) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    console.log(email);
+    if (!validateEmail(email)) return;
+    try {
+      const response = await axiosClient.post("/subscribe", { email: email });
+      if (response.status === 200) {
+        toast.success("Subscribed Successfully");
+        setEmail("");
+      } else if (response.status === 400) {
+        toast.error(response.data.error);
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.error);
+    }
   };
 
   return (
@@ -45,6 +64,7 @@ const FooterComponent = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

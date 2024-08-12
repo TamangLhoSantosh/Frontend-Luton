@@ -10,7 +10,6 @@ import { useFormik } from "formik";
 import { authStoreSchema } from "../../config/AuthFormikSchema";
 import axiosClient from "../../config/axiosClient";
 import { ToastContainer, toast } from "react-toastify";
-import { set } from "react-datepicker/dist/date_utils";
 
 const SignupComponent = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);

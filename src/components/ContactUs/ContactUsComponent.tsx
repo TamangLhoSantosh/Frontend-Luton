@@ -1,37 +1,72 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
-import Alert from "@mui/material/Alert";
 import { contactSchema } from "../../config/AuthFormikSchema";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import axiosClient from "../../config/axiosClient";
+import { toast } from "react-toastify";
 
 const ContactUsComponent: React.FC = () => {
-  const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
+  const data = {
+    fullName: "",
+    email: "",
+    message: "",
+  };
+
+  // Handle form submission
+  const handleSubmit = async (values: any) => {
+    try {
+      const response = await axiosClient.post("/contactUs", values);
+      toast.success("Message sent successfully", response.data.message);
+    } catch (e: any) {
+      toast.error(e.response.data.error);
+    }
+  };
 
   const formik = useFormik({
-    initialValues: {
-      fullName: "",
-      email: "",
-      message: "",
-    },
+    initialValues: data,
     validationSchema: contactSchema,
-    onSubmit: async (values) => {
-      try {
-        // Mock API call
-        console.log("Form submitted:", values);
-        setSubmissionStatus("Your message has been sent successfully!");
-      } catch (error) {
-        setSubmissionStatus(
-          "There was an error sending your message. Please try again."
-        );
-      }
-    },
+    onSubmit: handleSubmit,
   });
 
   return (
-    <div className="background flex justify-center text-black items-center my-20">
-      <div className="bg-sign-in max-w-md w-[90%] justify-start bg-white flex flex-col gap-5 rounded-lg shadow-lg p-5">
-        <div className="flex justify-center flex-col items-center p-4">
-          <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
+    <div className="flex justify-center items-center my-20 px-4 font-ubuntu">
+      <div className="flex gap-8 w-full max-w-6xl">
+        {/* Contact Info Section */}
+        <div className="bg-gray-100 p-8 rounded-lg shadow-md flex flex-col gap-6 sm:w-96">
+          <h2 className="text-3xl font-bold text-customDarkOrange">
+            Contact Info
+          </h2>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4 my-4">
+              <LocationOnIcon className="text-customOrange text-3xl" />
+              <div>
+                <p className="text-2xl font-semibold pb-4">Address</p>
+                <p className="text-gray-700">Luton Hotel Head Office</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 my-4">
+              <EmailIcon className="text-customOrange text-3xl" />
+              <div>
+                <p className="text-2xl font-semibold pb-4">Message Us</p>
+                <p className="text-gray-700">info@lutonhotel.com</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 my-4">
+              <PhoneIcon className="text-customOrange text-3xl" />
+              <div>
+                <p className="text-2xl font-semibold pb-4">Call Us</p>
+                <p className="text-gray-700">+21 434 344 432</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Form Section */}
+        <div className="bg-white p-6 rounded-lg shadow-lg flex-1">
+          <h1 className="text-3xl font-bold mb-6 text-center">Get In Touch</h1>
           <form onSubmit={formik.handleSubmit} className="space-y-6">
             <TextField
               id="fullName"
@@ -72,25 +107,12 @@ const ContactUsComponent: React.FC = () => {
               error={formik.touched.message && Boolean(formik.errors.message)}
               helperText={formik.touched.message && formik.errors.message}
             />
-
             <button
               type="submit"
-              className="w-full md:w-28 bg-customDarkOrange text-white p-2 rounded-md hover:bg-customOrange"
+              className="w-full md:w-36 bg-customDarkOrange text-white py-2 rounded-md hover:bg-customOrange"
             >
               Submit
             </button>
-
-            {submissionStatus && (
-              <div className="mt-4">
-                <Alert
-                  severity={
-                    submissionStatus.includes("error") ? "error" : "success"
-                  }
-                >
-                  {submissionStatus}
-                </Alert>
-              </div>
-            )}
           </form>
         </div>
       </div>

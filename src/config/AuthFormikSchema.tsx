@@ -97,9 +97,5 @@ export const contactSchema = Yup.object({
     .email("Invalid email address")
     .required("Email is required"),
 
-  phoneNumber: Yup.string()
-    .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
-    .required("Phone number is required."),
-
   message: Yup.string().required("Message is required"),
 });
