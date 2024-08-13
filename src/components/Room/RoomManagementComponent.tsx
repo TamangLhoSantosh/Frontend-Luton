@@ -7,7 +7,7 @@ interface TableItem {
   roomNo: string;
   roomType: string;
   price: string;
-  Availability: string;
+  availability: string;
 }
 
 // Define columns
@@ -29,7 +29,7 @@ const columns: TableColumn<TableItem>[] = [
   },
   {
     name: "Availability",
-    selector: (row: { Availability: string }) => row.Availability,
+    selector: (row: { availability: string }) => row.availability,
     sortable: true,
   },
 ];
@@ -40,25 +40,25 @@ const RoomManagementComponent = () => {
       roomNo: "101",
       roomType: "Single",
       price: "100",
-      Availability: "Available",
+      availability: "Available",
     },
     {
       roomNo: "102",
       roomType: "Double",
       price: "200",
-      Availability: "Not Available",
+      availability: "Not Available",
     },
     {
       roomNo: "103",
       roomType: "Single",
       price: "100",
-      Availability: "Available",
+      availability: "Available",
     },
     {
       roomNo: "104",
       roomType: "Double",
       price: "200",
-      Availability: "Not Available",
+      availability: "Not Available",
     },
   ]);
 
