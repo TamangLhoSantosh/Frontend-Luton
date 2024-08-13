@@ -21,7 +21,6 @@ const columns: TableColumn<TableItem>[] = [
   {
     name: "Room Number",
     selector: (row: { roomNo: string }) => row.roomNo,
-    sortable: true,
   },
   {
     name: "Booking Date",
