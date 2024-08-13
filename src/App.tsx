@@ -6,7 +6,7 @@ import LoginComponent from "./components/Login/LoginComponent";
 import SignupComponent from "./components/Signup/SignupComponent";
 import ContactUsComponent from "./components/ContactUs/ContactUsComponent";
 import BookNowComponent from "./components/Booking/BookNowComponent";
-import RoomDetails from "./components/RoomRate/RoomDetail";
+import RoomDetails from "./components/Room/RoomDetail";
 import AdminComponent from "./components/AdminDashboard/AdminComponent";
 
 import "react-datepicker/dist/react-datepicker.css";

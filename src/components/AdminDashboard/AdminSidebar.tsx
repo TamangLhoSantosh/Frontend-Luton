@@ -33,7 +33,7 @@ export default function AdminSidebar({ selectedPage, onSelectPage }: Props) {
   ];
 
   return (
-    <div className="bg-gray-200 h-screen w-11/12">
+    <div className="bg-gray-200 h-screen fixed">
       <Link to="/">
         <div
           className="text-3xl text-white flex items-center pb-4 p-3 w-full bg-black cursor-pointer"
@@ -44,7 +44,7 @@ export default function AdminSidebar({ selectedPage, onSelectPage }: Props) {
         </div>
       </Link>
 
-      <div className="pl-3 m-2">
+      <div className="m-2">
         <ul className="text-customOrange">
           {links.map((link, index) => (
             <li
@@ -56,7 +56,7 @@ export default function AdminSidebar({ selectedPage, onSelectPage }: Props) {
                     (window.location.href = "/"))
                   : onSelectPage(link.name);
               }}
-              className={`py-4 hover:cursor-pointer hover:scale-105 hover:bg-gray-300 hover:text-customDarkOrange transition duration-200 ease-in-out flex items-center ${
+              className={`ps-7 py-4 pe-14 hover:cursor-pointer hover:scale-105 hover:bg-gray-300 hover:text-customDarkOrange transition duration-200 ease-in-out flex items-center ${
                 selectedPage === link.name
                   ? "font-semibold text-customDarkOrange pl-2 rounded"
                   : ""

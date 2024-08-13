@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AdminDashboardComponent from "./AdminDashboardComponent";
+import AdminDashboardComponent from "./AdminDashboard";
 import AdminSidebar from "./AdminSidebar";
 
 const AdminComponent = () => {
@@ -7,10 +7,12 @@ const AdminComponent = () => {
 
   return (
     <div className="grid grid-cols-4">
-      <AdminSidebar
-        selectedPage={selectedPage}
-        onSelectPage={(page: string) => setselectedPage(page)}
-      />
+      <div className="max-h-screen">
+        <AdminSidebar
+          selectedPage={selectedPage}
+          onSelectPage={(page: string) => setselectedPage(page)}
+        />
+      </div>
       <div className="col-span-3">
         <AdminDashboardComponent selectedPage={selectedPage} />
       </div>
