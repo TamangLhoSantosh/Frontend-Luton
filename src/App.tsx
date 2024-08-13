@@ -5,56 +5,69 @@ import FooterComponent from "./components/Footer/FooterComponent";
 import LoginComponent from "./components/Login/LoginComponent";
 import SignupComponent from "./components/Signup/SignupComponent";
 import ContactUsComponent from "./components/ContactUs/ContactUsComponent";
-import BookNowComponent from "./components/BookNow/BookNowComponent";
+import BookNowComponent from "./components/Booking/BookNowComponent";
 import RoomDetails from "./components/RoomRate/RoomDetail";
+import AdminComponent from "./components/AdminDashboard/AdminComponent";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<PageWrapper component={<HomeComponent />} />}
-        />
-        <Route
-          path="/login"
-          element={<PageWrapper component={<LoginComponent />} />}
-        />
-        <Route
-          path="/signup"
-          element={<PageWrapper component={<SignupComponent />} />}
-        />
-        <Route
-          path="/contactus"
-          element={<PageWrapper component={<ContactUsComponent />} />}
-        />
-        <Route
-          path="/booknow"
-          element={<PageWrapper component={<BookNowComponent />} />}
-        />
-        <Route
-          path="/room/:roomType"
-          element={<PageWrapper component={<RoomDetails />} />}
-        />
-      </Routes>
-    </BrowserRouter>
-  );
-}
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route
+//           path="/"
+//           element={<PageWrapper component={<HomeComponent />} />}
+//         />
+//         <Route
+//           path="/login"
+//           element={<PageWrapper component={<LoginComponent />} />}
+//         />
+//         <Route
+//           path="/signup"
+//           element={<PageWrapper component={<SignupComponent />} />}
+//         />
+//         <Route
+//           path="/contactus"
+//           element={<PageWrapper component={<ContactUsComponent />} />}
+//         />
+//         <Route
+//           path="/booknow"
+//           element={<PageWrapper component={<BookNowComponent />} />}
+//         />
+//         <Route
+//           path="/room/:roomType"
+//           element={<PageWrapper component={<RoomDetails />} />}
+//         />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
 
-const PageWrapper = ({ component }: { component: JSX.Element }) => {
-  const location = useLocation();
-  const hideFooter = ["/login", "/signup"].includes(location.pathname);
+// const PageWrapper = ({ component }: { component: JSX.Element }) => {
+//   const location = useLocation();
+//   const hideFooter = ["/login", "/signup"].includes(location.pathname);
 
+//   return (
+//     <>
+//       <NavbarComponent />
+//       {component}
+//       {!hideFooter && <FooterComponent />}
+//     </>
+//   );
+// };
+
+// export default App;
+
+export default function App() {
   return (
     <>
-      <NavbarComponent />
-      {component}
-      {!hideFooter && <FooterComponent />}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AdminComponent />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
-};
-
-export default App;
+}

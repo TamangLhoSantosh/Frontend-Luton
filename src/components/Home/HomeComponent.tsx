@@ -3,7 +3,7 @@ import CheckAvailability from "../CheckAvailability/CheckAvailability";
 import HeroSectionComponent from "../HeroSection/HeroSectionComponent";
 import FacilitiesComponent from "../Facilities/FacilitiesComponent";
 import RoomRateComponent from "../RoomRate/RoomRateComponent";
-import BookNowButton from "../BookNow/BookNowButton";
+import BookNowButton from "../Booking/BookNowButton";
 
 const HomeComponent: React.FC = () => {
   return (

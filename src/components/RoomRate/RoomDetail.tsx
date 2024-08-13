@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import BookNowButton from "../BookNow/BookNowButton";
+import BookNowButton from "../Booking/BookNowButton";
 
 interface RoomFeature {
   roomSize: string;
