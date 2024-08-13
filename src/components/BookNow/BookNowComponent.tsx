@@ -14,6 +14,7 @@ interface BookingFormData {
   roomType: string;
   total: string;
 }
+
 const BookNowComponent: React.FC = () => {
   const [minCheckInDate, setMinCheckInDate] = useState(new Date());
   const [minCheckOutDate, setMinCheckOutDate] = useState(new Date());
@@ -64,6 +65,7 @@ const BookNowComponent: React.FC = () => {
       console.log("An error occurred.");
     }
   };
+
   useEffect(() => {
     getRoomTypes();
   }, []);

@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import axiosClient from "../../config/axiosClient";
 import { toast, ToastContainer } from "react-toastify";
+import { useFormik } from "formik";
+
+interface FormData {
+  checkInDate: Date | null;
+  checkOutDate: Date | null;
+  roomType: string;
+}
 
 const CheckAvailability = () => {
   // State to store the minimum check-in and check-out date
@@ -10,72 +17,33 @@ const CheckAvailability = () => {
 
   const [roomTypes, setRoomTypes] = useState([]);
 
-  // State to store the form data
-  const [formData, setFormData] = useState({
-    checkInDate: "",
-    checkOutDate: "",
+  const formData: FormData = {
+    checkInDate: null,
+    checkOutDate: null,
     roomType: "",
+  };
+
+  const formik = useFormik<FormData>({
+    initialValues: formData,
+    onSubmit: async (values) => {
+      try {
+        const response = await axiosClient.post(
+          "/booking/check-availability",
+          values
+        );
+        toast.success(response.data.message);
+      } catch (e: any) {
+        toast.error(e.response.data.error);
+      }
+    },
   });
-
-  // Handle change for form fields
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Handle date change
-  const handleDateChange = (
-    date: Date | null,
-    type: "checkInDate" | "checkOutDate"
-  ) => {
-    setFormData({
-      ...formData,
-      [type]: date ? date.toISOString().split("T")[0] : "",
-    });
-  };
-
-  // Validate form
-  const validate = () => {
-    if (!formData.checkInDate || !formData.checkOutDate || !formData.roomType) {
-      alert("Please fill in all the fields");
-      return false;
-    } else if (
-      new Date(formData.checkInDate) >= new Date(formData.checkOutDate)
-    ) {
-      alert("Check-out date must be greater than check-in date");
-      return false;
-    }
-    return true;
-  };
-
-  // Handle submit
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      if (!validate()) return;
-      const response = await axiosClient.post(
-        "/booking/check-availability",
-        formData
-      );
-      console.log(response);
-    } catch (e: any) {
-      toast.error(e.response.data.error);
-    }
-  };
 
   // Get Room Types
   const getRoomTypes = async () => {
     try {
       const response = await axiosClient.get("/roomType");
-      console.log(response);
       setRoomTypes(response.data);
-    } catch (e: any) {
-      console.log(e.response.data.error);
-    }
+    } catch (e: any) {}
   };
 
   useEffect(() => {
@@ -101,29 +69,28 @@ const CheckAvailability = () => {
   return (
     <form
       action="submit"
-      onSubmit={handleSubmit}
+      onSubmit={formik.handleSubmit}
       className="flex justify-center items-center bg-black h-32 p-4 shadow-lg space-x-4 font-ubuntu"
     >
       <DatePicker
-        selected={formData.checkInDate ? new Date(formData.checkInDate) : null}
+        selected={formik.values.checkInDate}
         minDate={minCheckInDate}
         className="text-xl px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
         placeholderText="Check In"
-        onChange={(date) => handleDateChange(date, "checkInDate")}
+        onChange={(date) => formik.setFieldValue("checkInDate", date)}
       />
       <DatePicker
-        selected={
-          formData.checkOutDate ? new Date(formData.checkOutDate) : null
-        }
+        selected={formik.values.checkOutDate}
         minDate={minCheckOutDate}
         className="text-xl px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
         placeholderText="Check Out"
-        onChange={(date) => handleDateChange(date, "checkOutDate")}
+        onChange={(date) => formik.setFieldValue("checkOutDate", date)}
       />
       <select
         name="roomType"
-        value={formData.roomType}
-        onChange={handleChange}
+        value={formik.values.roomType}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
         className="text-gray-400 px-4 py-2 border h-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-customOrange"
       >
         <option value="" disabled>

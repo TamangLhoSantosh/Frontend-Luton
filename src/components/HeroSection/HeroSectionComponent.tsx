@@ -7,7 +7,7 @@ const HeroSectionComponent = () => {
       style={{ backgroundImage: `url(${Image})` }}
     >
       <p className="text-white text-8xl font-bold pt-32">
-        WELCOME TO BON HOTEL
+        WELCOME TO LUTON HOTEL
       </p>
       <p className="text-white text-2xl pt-2">
         Good people. Good thinking. Good feeling.

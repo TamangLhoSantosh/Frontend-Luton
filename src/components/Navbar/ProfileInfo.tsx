@@ -30,6 +30,7 @@ const ProfileInfo = ({ user, setShowProfile }: ProfileInfoProps) => {
       username: "",
     });
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     toast.success("Logged out successfully");
     navigate("/");
     closeProfile();
