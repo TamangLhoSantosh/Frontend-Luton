@@ -1,5 +1,5 @@
 const RoomManagementComponent = () => {
-  return <div>RoomManagementComponent</div>;
+  return <div></div>;
 };
 
 export default RoomManagementComponent;

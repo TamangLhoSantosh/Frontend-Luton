@@ -119,9 +119,13 @@ const AdminDashboardComponent = () => {
           </div>
           <div className="grid grid-cols-2">
             {roomData.map((item, index) => (
-              <div key={index} className={`my-3 border-l-${item.color}-500`}>
-                <p className="ps-3">{item.title}</p>
-                <p className="text-lg ps-3">{item.value}</p>
+              <div
+                key={index}
+                className="my-3"
+                style={{ borderLeft: `4px solid ${item.color}` }}
+              >
+                <p className="text-sm ps-3">{item.title}</p>
+                <p className="text-xl ps-3">{item.value}</p>
               </div>
             ))}
           </div>
