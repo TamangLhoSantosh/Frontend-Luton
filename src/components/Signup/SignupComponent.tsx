@@ -8,8 +8,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useFormik } from "formik";
 import { authStoreSchema } from "../../config/AuthFormikSchema";
-import axiosClient from "../../config/axiosClient";
 import { ToastContainer, toast } from "react-toastify";
+import apis from "../../config/apis";
 
 const SignupComponent = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -41,15 +41,7 @@ const SignupComponent = () => {
       profileImage: values.profileImage ? values.profileImage : "",
     };
     try {
-      const response = await axiosClient.post(
-        "/auth/register",
-        formattedValues,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await apis.register(formattedValues);
       if (response.status === 201) {
         toast.success("User created successfully");
         setTimeout(() => {

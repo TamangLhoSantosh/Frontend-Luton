@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import apis from "../../config/apis";
 import { TextField } from "@mui/material";
-import { set } from "react-datepicker/dist/date_utils";
 
 // Table Item interface
 interface TableItem {
@@ -99,6 +98,7 @@ const RoomManagementComponent = () => {
     if (event.key === "Enter") {
       const response = await apis.getRooms({ roomNumber: searchTerm });
       setRooms(response.data);
+      setFilters({ roomType: "", availability: "" });
     }
   };
 
@@ -115,6 +115,7 @@ const RoomManagementComponent = () => {
   const handleFilter = async () => {
     const response = await apis.getRooms(filters);
     setRooms(response.data);
+    setSearchTerm("");
     toggleFilters();
   };
 
@@ -128,7 +129,6 @@ const RoomManagementComponent = () => {
     try {
       const response = await apis.getRooms();
       setRooms(response.data);
-      console.log(response.data);
     } catch (e: any) {
       toast.error(e.response.data.error);
     }
@@ -204,7 +204,9 @@ const RoomManagementComponent = () => {
                 value={filters.availability}
                 onChange={handleFilterChange}
               >
-                <option value="">All</option>
+                <option value="" disabled>
+                  All
+                </option>
                 <option value="true">Available</option>
                 <option value="false">Not Available</option>
               </select>
