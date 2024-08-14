@@ -14,10 +14,10 @@ const AdminDashboard = ({ selectedPage }: Props) => {
         <AdminDashboardComponent />
       ) : selectedPage === "Booking Management" ? (
         <BookingManagement />
-      ) : selectedPage === "User Management" ? (
-        <UserManagementComponent />
       ) : selectedPage === "Room Management" ? (
         <RoomManagementComponent />
+      ) : selectedPage === "User Management" ? (
+        <UserManagementComponent />
       ) : (
         <></>
       )}
