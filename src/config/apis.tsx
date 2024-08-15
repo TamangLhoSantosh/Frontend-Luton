@@ -13,6 +13,10 @@ const apis = {
     return axiosClient.post("/auth/login", logindata);
   },
 
+  getUserFromToken(token: string) {
+    return axiosClient.post("/auth/getUser", { params: token });
+  },
+
   getRoomTypes() {
     return axiosClient.get("/roomtype");
   },
@@ -25,10 +29,26 @@ const apis = {
     return axiosClient.get("/user", { params: filters });
   },
 
+  getUserById(id: string) {
+    return axiosClient.get(`/user/${id}`);
+  },
+
   searchUsers(searchTerm: string) {
     return axiosClient.get("/user/search", {
       params: { search: searchTerm, role: "user" },
     });
+  },
+
+  checkAvailability(data: any) {
+    return axiosClient.post("/booking/check-availability", data);
+  },
+
+  contactUs(data: any) {
+    return axiosClient.post("/contactUs", data);
+  },
+
+  subscribe(email: string) {
+    return axiosClient.post("/subscribe", { email: email });
   },
 };
 

@@ -3,9 +3,9 @@ import TextField from "@mui/material/TextField";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import axiosClient from "../../config/axiosClient";
 import { ContextProvider } from "../../hooks/ContextProvider";
 import { toast, ToastContainer } from "react-toastify";
+import apis from "../../config/apis";
 
 const SignIn = () => {
   const [show, setShow] = useState(false);
@@ -31,22 +31,22 @@ const SignIn = () => {
       let response;
       // If email
       if (data.username.includes("@")) {
-        response = await axiosClient.post("/auth/login", {
+        response = await apis.login({
           email: data.username,
           password: data.password,
         });
       }
       // If username
       else {
-        response = await axiosClient.post("/auth/login", data);
+        response = await apis.login(data);
       }
       if (response.status === 200) {
         setUser(response.data.user);
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", response.data.user);
         toast.success("Logged in successfully");
         setTimeout(() => {
-          navigate("/");
+          if (response.data.user.role === "user") navigate("/");
+          else navigate("/adminDashboard");
         }, 2000);
       } else {
         toast.error(response.data.message ?? "An unexpected error occurred");

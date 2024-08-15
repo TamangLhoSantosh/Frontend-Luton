@@ -118,7 +118,6 @@ const UserManagementComponent = () => {
   // Get users data
   const getUsers = async (filters: any) => {
     const response = await apis.getUsers(filters);
-    console.log(response.data);
     setUsers(response.data);
   };
 

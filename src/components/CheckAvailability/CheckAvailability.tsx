@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import axiosClient from "../../config/axiosClient";
 import { toast, ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
+import apis from "../../config/apis";
 
 interface FormData {
   checkInDate: Date | null;
@@ -27,10 +27,7 @@ const CheckAvailability = () => {
     initialValues: formData,
     onSubmit: async (values) => {
       try {
-        const response = await axiosClient.post(
-          "/booking/check-availability",
-          values
-        );
+        const response = await apis.checkAvailability(values);
         toast.success(response.data.message);
       } catch (e: any) {
         toast.error(e.response.data.error);
@@ -41,7 +38,7 @@ const CheckAvailability = () => {
   // Get Room Types
   const getRoomTypes = async () => {
     try {
-      const response = await axiosClient.get("/roomType");
+      const response = await apis.getRoomTypes();
       setRoomTypes(response.data);
     } catch (e: any) {}
   };

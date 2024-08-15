@@ -52,7 +52,6 @@ export default function AdminSidebar({ selectedPage, onSelectPage }: Props) {
               onClick={() => {
                 link.name === "Log Out"
                   ? (localStorage.removeItem("token"),
-                    localStorage.removeItem("user"),
                     (window.location.href = "/"))
                   : onSelectPage(link.name);
               }}

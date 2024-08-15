@@ -5,8 +5,8 @@ import { contactSchema } from "../../config/AuthFormikSchema";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import axiosClient from "../../config/axiosClient";
 import { toast } from "react-toastify";
+import apis from "../../config/apis";
 
 const ContactUsComponent: React.FC = () => {
   const data = {
@@ -18,7 +18,7 @@ const ContactUsComponent: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (values: any) => {
     try {
-      const response = await axiosClient.post("/contactUs", values);
+      const response = await apis.contactUs(values);
       toast.success("Message sent successfully", response.data.message);
     } catch (e: any) {
       toast.error(e.response.data.error);

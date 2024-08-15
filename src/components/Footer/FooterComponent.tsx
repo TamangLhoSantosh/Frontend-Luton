@@ -1,7 +1,7 @@
 import { FormEventHandler, useState } from "react";
 import Logo from "../../assets/logo.png";
-import axiosClient from "../../config/axiosClient";
 import { toast, ToastContainer } from "react-toastify";
+import apis from "../../config/apis";
 
 const FooterComponent = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const FooterComponent = () => {
     e.preventDefault();
     if (!validateEmail(email)) return;
     try {
-      const response = await axiosClient.post("/subscribe", { email: email });
+      const response = await apis.subscribe(email);
       if (response.status === 200) {
         toast.success("Subscribed Successfully");
         setEmail("");
