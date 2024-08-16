@@ -53,6 +53,7 @@ export function ContextApp({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
+    if (!localStorage.getItem("token")) return;
     const fetchUserData = async () => {
       try {
         const response = await apis.getUserFromToken();

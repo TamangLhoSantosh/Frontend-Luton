@@ -21,6 +21,10 @@ const apis = {
     return axiosClient.get("/roomtype");
   },
 
+  addRoom(data: any) {
+    return axiosClient.post("/room", data);
+  },
+
   getRooms(filters = {}) {
     return axiosClient.get("/room", { params: filters });
   },

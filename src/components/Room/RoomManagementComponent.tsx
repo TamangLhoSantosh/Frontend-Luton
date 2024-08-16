@@ -2,9 +2,10 @@ import { CiFilter } from "react-icons/ci";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import apis from "../../config/apis";
 import { TextField } from "@mui/material";
+import AddRoomComponent from "./AddRoomComponent";
 
 // Table Item interface
 interface TableItem {
@@ -86,6 +87,9 @@ const RoomManagementComponent = () => {
   // State to store search term
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  // State to store form visibility
+  const [showForm, setShowForm] = useState(false);
+
   // Handle search term change
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -122,6 +126,17 @@ const RoomManagementComponent = () => {
   // Reset Filters
   const resetFilters = () => {
     setFilters({ roomType: "", availability: "" });
+  };
+
+  // Open form
+  const openForm = () => {
+    setShowForm(true);
+  };
+
+  // Close form
+  const closeForm = () => {
+    setShowForm(false);
+    getRooms();
   };
 
   // Get rooms
@@ -165,7 +180,7 @@ const RoomManagementComponent = () => {
             className="text-3xl ms-4 cursor-pointer"
             onClick={toggleFilters}
           />
-          <IoAddCircleOutline className="text-3xl ms-4" />
+          <IoAddCircleOutline className="text-3xl ms-4" onClick={openForm} />
         </div>
       </div>
       {/* Filters */}
@@ -242,6 +257,13 @@ const RoomManagementComponent = () => {
           striped
         />
       </div>
+      {/* Add Room Form */}
+      {showForm && (
+        <AddRoomComponent onClose={closeForm} roomTypes={roomTypes} />
+      )}
+
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 };
