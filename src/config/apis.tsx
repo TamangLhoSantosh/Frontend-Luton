@@ -13,8 +13,8 @@ const apis = {
     return axiosClient.post("/auth/login", logindata);
   },
 
-  getUserFromToken(token: string) {
-    return axiosClient.post("/auth/getUser", { params: token });
+  getUserFromToken() {
+    return axiosClient.post("/auth/getUser");
   },
 
   getRoomTypes() {
