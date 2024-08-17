@@ -58,6 +58,11 @@ export function ContextApp({ children }: { children: ReactNode }) {
       try {
         const response = await apis.getUserFromToken();
         setUser(response.data);
+        if (
+          (response.data.role === "admin" || response.data.role === "staff") &&
+          window.location.pathname !== "/adminDashboard"
+        )
+          window.location.href = "/adminDashboard";
       } catch (error) {}
     };
 
