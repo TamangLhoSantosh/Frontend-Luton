@@ -9,7 +9,7 @@ import {
 
 // Props interface
 interface Props {
-  handleSubmit: () => void;
+  handleSubmit: (e: any) => void;
   handleClose: () => void;
   room: any;
   setRoom: any;
@@ -66,7 +66,7 @@ const RoomFormComponent = ({
                 | null
                 | undefined;
             }) => (
-              <option key={roomType._id} value={roomType._id}>
+              <option key={String(roomType._id)} value={String(roomType._id)}>
                 {roomType.roomType}
               </option>
             )

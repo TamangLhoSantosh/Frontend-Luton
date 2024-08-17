@@ -1,9 +1,8 @@
-import { CiFilter } from "react-icons/ci";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import apis from "../../config/apis";
+import { CiFilter } from "react-icons/ci";
 
 // Table item interface
 interface TableItem {
@@ -138,7 +137,6 @@ const UserManagementComponent = () => {
             onKeyPress={handleKeyPress}
           />
           <CiFilter className="text-3xl ms-4" onClick={toggleFilters} />
-          <IoAddCircleOutline className="text-3xl ms-4" />
         </div>
       </div>
       {/* Filters */}
