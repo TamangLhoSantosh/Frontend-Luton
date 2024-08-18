@@ -17,6 +17,14 @@ const apis = {
     return axiosClient.post("/auth/getUser");
   },
 
+  addBooking(data: any) {
+    return axiosClient.post("/booking", data);
+  },
+
+  getBooking(id: string) {
+    return axiosClient.get(`/booking/${id}`);
+  },
+
   getRoomTypes() {
     return axiosClient.get("/roomtype");
   },

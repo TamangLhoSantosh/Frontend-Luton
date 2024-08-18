@@ -34,7 +34,7 @@ export default function AdminSidebar({ selectedPage, onSelectPage }: Props) {
 
   return (
     <div className="bg-gray-200 h-screen fixed">
-      <Link to="/">
+      <Link to="/adminDashboard">
         <div
           className="text-3xl text-white flex items-center pb-4 p-3 w-full bg-black cursor-pointer"
           onClick={() => onSelectPage("Dashboard")}

@@ -28,30 +28,6 @@ interface Filters {
   availability: string;
 }
 
-// Define columns
-const columns: TableColumn<TableItem>[] = [
-  {
-    name: "Room Number",
-    selector: (row: { roomNumber: string }) => row.roomNumber,
-    sortable: true,
-  },
-  {
-    name: "Room Type",
-    selector: (row: TableItem) => row.roomType.roomType,
-    sortable: true,
-  },
-  {
-    name: "Price",
-    selector: (row: TableItem) => row.roomType.pricePerNight,
-    sortable: true,
-  },
-  {
-    name: "Availability",
-    selector: (row: { availability: string }) => row.availability.toUpperCase(),
-    sortable: true,
-  },
-];
-
 const RoomManagementComponent = () => {
   // State to store rooms
   const [rooms, setRooms] = useState<TableItem[]>([
@@ -72,6 +48,30 @@ const RoomManagementComponent = () => {
     },
   ]);
 
+  // Define columns
+  const columns: TableColumn<TableItem>[] = [
+    {
+      name: "Room Number",
+      selector: (row: { roomNumber: string }) => row.roomNumber,
+      sortable: true,
+    },
+    {
+      name: "Room Type",
+      selector: (row: TableItem) => row.roomType.roomType,
+      sortable: true,
+    },
+    {
+      name: "Price",
+      selector: (row: TableItem) => row.roomType.pricePerNight,
+      sortable: true,
+    },
+    {
+      name: "Availability",
+      selector: (row: { availability: string }) =>
+        row.availability.toUpperCase(),
+      sortable: true,
+    },
+  ];
   // State to store filters
   const [filters, setFilters] = useState<Filters>({
     roomType: "",

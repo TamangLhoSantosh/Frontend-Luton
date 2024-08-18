@@ -20,35 +20,6 @@ interface Filters {
   isActive: string;
 }
 
-// Define columns
-const columns: TableColumn<TableItem>[] = [
-  {
-    name: "Full Name",
-    selector: (row: { fullName: string }) => row.fullName,
-    sortable: true,
-  },
-  {
-    name: "Username",
-    selector: (row: { username: string }) => row.username,
-    sortable: true,
-  },
-  {
-    name: "Email",
-    selector: (row: { email: string }) => row.email,
-    sortable: true,
-  },
-  {
-    name: "Role",
-    selector: (row: { role: string }) => row.role.toUpperCase(),
-    sortable: true,
-  },
-  {
-    name: "Status",
-    selector: (row: { isActive: string }) => row.isActive.toUpperCase(),
-    sortable: true,
-  },
-];
-
 const UserManagementComponent = () => {
   // State to store users data
   const [users, setUsers] = useState<TableItem[]>([
@@ -70,6 +41,35 @@ const UserManagementComponent = () => {
     role: "",
     isActive: "",
   });
+
+  // Define columns
+  const columns: TableColumn<TableItem>[] = [
+    {
+      name: "Full Name",
+      selector: (row: { fullName: string }) => row.fullName,
+      sortable: true,
+    },
+    {
+      name: "Username",
+      selector: (row: { username: string }) => row.username,
+      sortable: true,
+    },
+    {
+      name: "Email",
+      selector: (row: { email: string }) => row.email,
+      sortable: true,
+    },
+    {
+      name: "Role",
+      selector: (row: { role: string }) => row.role.toUpperCase(),
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row: { isActive: string }) => row.isActive.toUpperCase(),
+      sortable: true,
+    },
+  ];
 
   // State to toggle filters
   const [showFilters, setShowFilters] = useState(false);
