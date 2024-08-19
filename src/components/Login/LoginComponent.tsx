@@ -60,7 +60,7 @@ const SignIn = () => {
     <div className="background flex justify-center text-black items-center my-20 min-h-screen">
       <div className="bg-sign-in max-w-md w-[90%]  justify-start bg-white flex flex-col gap-5 rounded-lg shadow-lg p-5">
         <div className="flex justify-center flex-col items-center p-4">
-          <h1 className="text-customDarkOrange hover:text-customOrange text-3xl font-bold w-full p-3 rounded-b-lg text-center">
+          <h1 className="text-customOrange text-3xl font-bold w-full p-3 rounded-b-lg text-center">
             Sign In
           </h1>
           <p className="text-xl text-center  text-customOrange">
@@ -102,7 +102,7 @@ const SignIn = () => {
               />
             )}
           </div>
-          <div className="flex justify-between items-center w-full mt-2">
+          {/* <div className="flex justify-between items-center w-full mt-2">
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -114,7 +114,7 @@ const SignIn = () => {
             >
               Forget password?
             </Link>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full self-center md:w-28 bg-customDarkOrange mt-[10px] text-white p-2 rounded-md hover:bg-customOrange"

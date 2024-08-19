@@ -21,8 +21,8 @@ const apis = {
     return axiosClient.post("/booking", data);
   },
 
-  getBooking(id: string) {
-    return axiosClient.get(`/booking/${id}`);
+  getBooking(filters = {}) {
+    return axiosClient.get("/booking", { params: filters });
   },
 
   getRoomTypes() {

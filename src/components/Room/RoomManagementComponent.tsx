@@ -72,6 +72,7 @@ const RoomManagementComponent = () => {
       sortable: true,
     },
   ];
+
   // State to store filters
   const [filters, setFilters] = useState<Filters>({
     roomType: "",
