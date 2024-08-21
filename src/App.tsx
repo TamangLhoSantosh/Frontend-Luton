@@ -8,6 +8,7 @@ import ContactUsComponent from "./components/ContactUs/ContactUsComponent";
 import BookNowComponent from "./components/Booking/BookNowComponent";
 import RoomDetails from "./components/Room/RoomDetail";
 import AdminComponent from "./components/AdminDashboard/AdminComponent";
+import ScrollToTop from "./components/ScrollToTop";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,6 +43,7 @@ function App() {
         />
         <Route path="/adminDashboard" element={<AdminComponent />} />
       </Routes>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }

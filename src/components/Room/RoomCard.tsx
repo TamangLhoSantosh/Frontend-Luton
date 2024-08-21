@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+// Props interface
 interface Props {
   link: string;
   state: {
@@ -17,6 +18,7 @@ interface Props {
 
 const RoomCard = ({ link, state }: Props) => {
   return (
+    // Image as background
     <div
       className="flex justify-center items-end bg-cover bg-center rounded-lg h-56 md:h-[500px]"
       style={{ backgroundImage: `url(${state.image})` }}
