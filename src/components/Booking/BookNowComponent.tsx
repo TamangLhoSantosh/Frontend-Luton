@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import { ContextProvider } from "../../hooks/ContextProvider";
 import axiosClient from "../../config/axiosClient";
 
+// Booking form data interface
 interface BookingFormData {
   guestName: string;
   guestEmail: string;

@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import apis from "../../config/apis";
 
+// Form data interface
 interface FormData {
   checkInDate: Date | null;
   checkOutDate: Date | null;
@@ -56,12 +57,12 @@ const CheckAvailability = () => {
     setMinCheckOutDate(tomorrow);
 
     // Update the minimum check-out date based on the check-in date
-    if (formData.checkInDate) {
-      let chekout = new Date(formData.checkInDate);
-      chekout.setDate(chekout.getDate() + 1);
-      setMinCheckOutDate(chekout);
+    if (formik.values.checkInDate) {
+      let checkout = new Date(formik.values.checkInDate);
+      checkout.setDate(checkout.getDate() + 1);
+      setMinCheckOutDate(checkout);
     }
-  }, [formData.checkInDate]);
+  }, [formik.values.checkInDate]);
 
   return (
     <form
