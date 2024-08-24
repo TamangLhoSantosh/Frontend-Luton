@@ -3,7 +3,8 @@ import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { ContextProvider } from "../../hooks/ContextProvider";
-import axiosClient from "../../config/axiosClient";
+import apis from "../../config/apis";
+import { toast, ToastContainer } from "react-toastify";
 
 // Booking form data interface
 interface BookingFormData {
@@ -13,13 +14,15 @@ interface BookingFormData {
   checkInDate: Date | null;
   checkOutDate: Date | null;
   roomType: string;
-  total: string;
+  totalPrice: string;
 }
 
 const BookNowComponent: React.FC = () => {
+  // State for minimum check-in and check-out dates
   const [minCheckInDate, setMinCheckInDate] = useState(new Date());
   const [minCheckOutDate, setMinCheckOutDate] = useState(new Date());
 
+  // State for room types
   const [roomTypes, setRoomTypes] = useState([
     {
       _id: "",
@@ -30,37 +33,56 @@ const BookNowComponent: React.FC = () => {
 
   const { user } = useContext(ContextProvider);
 
-  const data: BookingFormData = user
-    ? {
-        guestName: "sadf",
-        guestEmail: "sdf",
-        guestPhone: "sadf",
-        checkInDate: null,
-        checkOutDate: null,
-        roomType: "",
-        total: "",
-      }
-    : {
-        guestName: "",
-        guestEmail: "",
-        guestPhone: "",
-        checkInDate: null,
-        checkOutDate: null,
-        roomType: "",
-        total: "",
-      };
+  // Initialize form data
+  const data: BookingFormData =
+    user && user._id
+      ? // If logged in
+        {
+          guestName: "sadf",
+          guestEmail: "sdf",
+          guestPhone: "sadf",
+          checkInDate: null,
+          checkOutDate: null,
+          roomType: "",
+          totalPrice: "",
+        }
+      : // If not logged in
+        {
+          guestName: "",
+          guestEmail: "",
+          guestPhone: "",
+          checkInDate: null,
+          checkOutDate: null,
+          roomType: "",
+          totalPrice: "",
+        };
 
+  // Book room
+  const addBooking = async () => {
+    try {
+      console.log(formik.values);
+      const response = await apis.addBooking(formik.values);
+      console.log(response.data);
+      if (response.status !== 200) {
+        toast.error(response.data.error);
+      }
+      toast.success("Booking successful!");
+    } catch (e: any) {
+      toast.error(e.response.data.error);
+    }
+  };
+  // Formik hook
   const formik = useFormik<BookingFormData>({
     initialValues: data,
-    onSubmit: (values) => {
-      console.log("Booking data:", values);
+    onSubmit: () => {
+      addBooking();
     },
   });
 
   // Get Room Types
   const getRoomTypes = async () => {
     try {
-      const response = await axiosClient.get("/roomType");
+      const response = await apis.getRoomTypes();
       setRoomTypes(response.data);
     } catch (e: any) {
       console.log("An error occurred.");
@@ -84,9 +106,9 @@ const BookNowComponent: React.FC = () => {
       );
       const rate = room ? Number(room.pricePerNight) : 0;
       const total = diffTime * rate;
-      formik.setFieldValue("total", total.toFixed(2));
+      formik.setFieldValue("totalPrice", total.toFixed(2));
     } else {
-      formik.setFieldValue("total", "");
+      formik.setFieldValue("totalPrice", "");
     }
   };
 
@@ -112,6 +134,7 @@ const BookNowComponent: React.FC = () => {
       checkout.setDate(checkout.getDate() + 1);
       setMinCheckOutDate(checkout);
     }
+    2;
   }, [formik.values.checkInDate]);
 
   return (
@@ -120,10 +143,11 @@ const BookNowComponent: React.FC = () => {
         Book Your Stay
       </p>
       <form onSubmit={formik.handleSubmit} className="space-y-6">
-        {user.fullName ? (
+        {user && user._id ? (
           <></>
         ) : (
           <>
+            {/* Guest Name */}
             <TextField
               autoComplete="guestName"
               type="text"
@@ -140,6 +164,7 @@ const BookNowComponent: React.FC = () => {
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
               required
             />
+            {/* Guest Email */}
             <TextField
               type="email"
               id="guestEmail"
@@ -155,6 +180,7 @@ const BookNowComponent: React.FC = () => {
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange"
               required
             />
+            {/* Guest Phone */}
             <TextField
               type="tel"
               id="guestPhone"
@@ -173,6 +199,7 @@ const BookNowComponent: React.FC = () => {
           </>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 space-y-2 items-end">
+          {/* Check In Date */}
           <div>
             <label
               htmlFor="checkInDate"
@@ -188,6 +215,7 @@ const BookNowComponent: React.FC = () => {
               onChange={(date) => formik.setFieldValue("checkInDate", date)}
             />
           </div>
+          {/* Check Out Date */}
           <div>
             <label
               htmlFor="checkOutDate"
@@ -204,7 +232,7 @@ const BookNowComponent: React.FC = () => {
             />
           </div>
         </div>
-
+        {/* Room Type */}
         <div className="space-y-2">
           <label
             htmlFor="roomType"
@@ -231,10 +259,11 @@ const BookNowComponent: React.FC = () => {
             ))}
           </select>
         </div>
+        {/* Total Amount */}
         <TextField
           type="text"
           name="total"
-          value={formik.values.total}
+          value={formik.values.totalPrice}
           label="Total Amount"
           className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-customOrange z-0"
           disabled
@@ -246,6 +275,7 @@ const BookNowComponent: React.FC = () => {
           Book Now
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
