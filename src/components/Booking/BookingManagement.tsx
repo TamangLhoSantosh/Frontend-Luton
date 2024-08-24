@@ -129,22 +129,28 @@ const BookingManagement = () => {
   const getBooking = async (filters: any) => {
     try {
       const response = await apis.getBooking(filters);
-      console.log(response.data);
       // Transform the booking data to match the TableItem structure
       setBookings(
         response.data.map(
           (booking: {
-            user: { fullName: any };
-            room: { roomNumber: any };
-            checkInDate: any;
-            checkOutDate: any;
+            user: { fullName: string };
+            room: { roomNumber: string };
+            guest: { guestName: string };
+            checkInDate: string;
+            checkOutDate: string;
             createdAt: string;
           }) => ({
-            fullName: booking.user.fullName,
+            fullName:
+              booking.user && booking.user.fullName
+                ? booking.user.fullName
+                : booking.guest.guestName,
             roomNo: booking.room.roomNumber,
-            checkInDate: booking.checkInDate,
-            checkOutDate: booking.checkOutDate,
-            createdAt: booking.createdAt,
+            checkInDate: booking.checkInDate.split("T")[0],
+            checkOutDate: booking.checkOutDate.split("T")[0],
+
+            createdAt: new Date(parseInt(booking.createdAt))
+              .toISOString()
+              .split("T")[0],
           })
         )
       );
