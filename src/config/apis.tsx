@@ -25,6 +25,22 @@ const apis = {
     return axiosClient.get("/booking", { params: filters });
   },
 
+  getNewBooking() {
+    return axiosClient.get("/booking/new-bookings");
+  },
+
+  getLatestBooking() {
+    return axiosClient.get("/booking/latest-bookings");
+  },
+
+  getNotCheckedOutBookings() {
+    return axiosClient.get("/booking/bookings-not-checked-out");
+  },
+
+  getRoomAvailability() {
+    return axiosClient.get("/booking/room-availability");
+  },
+
   getRoomTypes() {
     return axiosClient.get("/roomtype");
   },
@@ -35,6 +51,10 @@ const apis = {
 
   getRooms(filters = {}) {
     return axiosClient.get("/room", { params: filters });
+  },
+
+  getAvailableRoom(data = {}) {
+    return axiosClient.post("/room/available-room", data);
   },
 
   getUsers(filters = {}) {

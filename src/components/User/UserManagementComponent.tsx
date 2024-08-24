@@ -146,7 +146,7 @@ const UserManagementComponent = () => {
             {/* Role */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
-                Room Type
+                Role
               </label>
               <select
                 name="role"
@@ -157,7 +157,6 @@ const UserManagementComponent = () => {
                 <option value="" disabled>
                   Select Role
                 </option>
-                <option value="admin">Admin</option>
                 <option value="staff">Staff</option>
                 <option value="user">User</option>
               </select>
@@ -165,7 +164,7 @@ const UserManagementComponent = () => {
             {/* isActive */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
-                Status
+                Is Active
               </label>
               <select
                 name="isActive"

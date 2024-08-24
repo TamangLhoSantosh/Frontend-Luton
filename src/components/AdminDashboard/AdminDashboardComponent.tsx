@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
+import apis from "../../config/apis";
 
+// Table Item Interface
 interface TableItem {
   fullName: string;
   status: string;
   date: string;
+  checkInDate: string;
+  checkOutDate: string;
 }
 
 // Define columns
@@ -15,13 +19,23 @@ const columns: TableColumn<TableItem>[] = [
     sortable: true,
   },
   {
-    name: "Status",
-    selector: (row: { status: string }) => row.status,
+    name: "Date",
+    selector: (row: { date: string }) => row.date,
     sortable: true,
   },
   {
-    name: "Date",
-    selector: (row: { date: string }) => row.date,
+    name: "Check In Date",
+    selector: (row: { checkInDate: string }) => row.checkInDate,
+    sortable: true,
+  },
+  {
+    name: "Check Out Date",
+    selector: (row: { checkOutDate: string }) => row.checkOutDate,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    selector: (row: { status: string }) => row.status,
     sortable: true,
   },
 ];
@@ -31,14 +45,12 @@ const AdminDashboardComponent = () => {
   const [checkIn, setCheckIn] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const [roomAvailability, setRoomAvailability] = useState({
-    occupied: 3,
-    available: 4,
-    reserved: 3,
+    occupied: 0,
+    available: 0,
+    reserved: 0,
   });
 
-  const [bookings, setBookings] = useState<TableItem[]>([
-    { fullName: "Sdf", status: "Booked", date: new Date().toDateString() },
-  ]);
+  const [bookings, setBookings] = useState<TableItem[]>([]);
 
   // State for storing data of the cards data
   const cardData = [
@@ -71,22 +83,84 @@ const AdminDashboardComponent = () => {
   const reservedWidth = (roomAvailability.reserved / total) * 100;
   const occupiedWidth = (roomAvailability.occupied / total) * 100;
 
-  const getNewBookings = () => {
-    // fetch total bookings from API
+  // Get New Bookings Count
+  const getNewBookings = async () => {
+    try {
+      const response = await apis.getNewBooking();
+      setNewBookings(response.data.length);
+    } catch (e: any) {}
   };
 
-  const getCheckIn = () => {
-    // fetch total revenue from API
+  // Get Not Checked Out Bookings
+  const getNotCheckedOutBookings = async () => {
+    try {
+      const response = await apis.getNotCheckedOutBookings();
+      setCheckIn(response.data.length);
+      setRoomAvailability((prevState) => ({
+        ...prevState,
+        occupied: response.data.length,
+      }));
+    } catch (E: any) {}
   };
 
-  const getTotalUsers = () => {
-    // fetch total users from API
+  // Get Room Availability
+  const getRoomAvailability = async () => {
+    try {
+      const response = await apis.getRoomAvailability();
+      console.log(response.data);
+      setRoomAvailability((prevState) => ({
+        ...prevState,
+        available: response.data.availableRooms.length,
+        reserved: response.data.bookedRooms.length,
+      }));
+    } catch (E: any) {}
+  };
+
+  // Get Total Users Count
+  const getTotalUsers = async () => {
+    try {
+      const response = await apis.getUsers({ role: "user" });
+      setTotalUsers(response.data.length);
+    } catch (E: any) {}
+  };
+
+  // Get Latest Bookings Update
+  const getLatestBooking = async () => {
+    try {
+      const response = await apis.getLatestBooking();
+      setBookings(
+        response.data.map(
+          (booking: {
+            user: { fullName: string };
+            room: string;
+            guest: { guestName: string };
+            status: string;
+            checkInDate: string;
+            checkOutDate: string;
+            updatedAt: string;
+          }) => ({
+            fullName:
+              booking.user && booking.user.fullName
+                ? booking.user.fullName
+                : booking.guest.guestName,
+            status: booking.status.toUpperCase(),
+            checkInDate: booking.checkInDate.split("T")[0],
+            checkOutDate: booking.checkOutDate.split("T")[0],
+            date: new Date(parseInt(booking.updatedAt))
+              .toISOString()
+              .split("T")[0],
+          })
+        )
+      );
+    } catch (E: any) {}
   };
 
   useEffect(() => {
     getNewBookings();
-    getCheckIn();
+    getNotCheckedOutBookings();
+    getRoomAvailability();
     getTotalUsers();
+    getLatestBooking();
   }, []);
 
   return (
