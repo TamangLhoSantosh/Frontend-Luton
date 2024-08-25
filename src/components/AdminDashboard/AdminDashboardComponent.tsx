@@ -107,7 +107,6 @@ const AdminDashboardComponent = () => {
   const getRoomAvailability = async () => {
     try {
       const response = await apis.getRoomAvailability();
-      console.log(response.data);
       setRoomAvailability((prevState) => ({
         ...prevState,
         available: response.data.availableRooms.length,
@@ -146,9 +145,7 @@ const AdminDashboardComponent = () => {
             status: booking.status.toUpperCase(),
             checkInDate: booking.checkInDate.split("T")[0],
             checkOutDate: booking.checkOutDate.split("T")[0],
-            date: new Date(parseInt(booking.updatedAt))
-              .toISOString()
-              .split("T")[0],
+            date: booking.updatedAt.split("T")[0],
           })
         )
       );

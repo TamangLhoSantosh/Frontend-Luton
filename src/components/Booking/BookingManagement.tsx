@@ -147,9 +147,7 @@ const BookingManagement = () => {
             roomNo: booking.room.roomNumber,
             checkInDate: booking.checkInDate.split("T")[0],
             checkOutDate: booking.checkOutDate.split("T")[0],
-            createdAt: new Date(parseInt(booking.createdAt))
-              .toISOString()
-              .split("T")[0],
+            createdAt: booking.createdAt.split("T")[0],
           })
         )
       );

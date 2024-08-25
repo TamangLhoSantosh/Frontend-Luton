@@ -12,8 +12,11 @@ import ScrollToTop from "./components/ScrollToTop";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
+import { ContextProvider } from "./hooks/ContextProvider";
 
 function App() {
+  const { user } = useContext(ContextProvider);
   return (
     <BrowserRouter>
       <Routes>
@@ -21,14 +24,20 @@ function App() {
           path="/"
           element={<PageWrapper component={<HomeComponent />} />}
         />
-        <Route
-          path="/login"
-          element={<PageWrapper component={<LoginComponent />} />}
-        />
-        <Route
-          path="/signup"
-          element={<PageWrapper component={<SignupComponent />} />}
-        />
+        {user && user.role ? (
+          <></>
+        ) : (
+          <>
+            <Route
+              path="/login"
+              element={<PageWrapper component={<LoginComponent />} />}
+            />
+            <Route
+              path="/signup"
+              element={<PageWrapper component={<SignupComponent />} />}
+            />
+          </>
+        )}
         <Route
           path="/contactus"
           element={<PageWrapper component={<ContactUsComponent />} />}
