@@ -11,38 +11,8 @@ interface TableItem {
   checkOutDate: string;
 }
 
-// Define columns
-const columns: TableColumn<TableItem>[] = [
-  {
-    name: "Full Name",
-    selector: (row: { fullName: string }) => row.fullName,
-    sortable: true,
-  },
-  {
-    name: "Date",
-    selector: (row: { date: string }) => row.date,
-    sortable: true,
-  },
-  {
-    name: "Check In Date",
-    selector: (row: { checkInDate: string }) => row.checkInDate,
-    sortable: true,
-  },
-  {
-    name: "Check Out Date",
-    selector: (row: { checkOutDate: string }) => row.checkOutDate,
-    sortable: true,
-  },
-  {
-    name: "Status",
-    selector: (row: { status: string }) => row.status,
-    sortable: true,
-  },
-];
-
 const AdminDashboardComponent = () => {
   const [newBookings, setNewBookings] = useState(0);
-  const [checkIn, setCheckIn] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const [roomAvailability, setRoomAvailability] = useState({
     occupied: 0,
@@ -52,6 +22,35 @@ const AdminDashboardComponent = () => {
 
   const [bookings, setBookings] = useState<TableItem[]>([]);
 
+  // Define columns
+  const columns: TableColumn<TableItem>[] = [
+    {
+      name: "Full Name",
+      selector: (row: { fullName: string }) => row.fullName,
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: (row: { date: string }) => row.date,
+      sortable: true,
+    },
+    {
+      name: "Check In Date",
+      selector: (row: { checkInDate: string }) => row.checkInDate,
+      sortable: true,
+    },
+    {
+      name: "Check Out Date",
+      selector: (row: { checkOutDate: string }) => row.checkOutDate,
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row: { status: string }) => row.status,
+      sortable: true,
+    },
+  ];
+
   // State for storing data of the cards data
   const cardData = [
     {
@@ -60,7 +59,7 @@ const AdminDashboardComponent = () => {
     },
     {
       title: "Check-In",
-      value: checkIn,
+      value: roomAvailability.occupied,
     },
     {
       title: "Total Users",
@@ -91,18 +90,6 @@ const AdminDashboardComponent = () => {
     } catch (e: any) {}
   };
 
-  // Get Not Checked Out Bookings
-  const getNotCheckedOutBookings = async () => {
-    try {
-      const response = await apis.getNotCheckedOutBookings();
-      setCheckIn(response.data.length);
-      setRoomAvailability((prevState) => ({
-        ...prevState,
-        occupied: response.data.length,
-      }));
-    } catch (E: any) {}
-  };
-
   // Get Room Availability
   const getRoomAvailability = async () => {
     try {
@@ -111,6 +98,7 @@ const AdminDashboardComponent = () => {
         ...prevState,
         available: response.data.availableRooms.length,
         reserved: response.data.bookedRooms.length,
+        occupied: response.data.occupiedRooms.length,
       }));
     } catch (E: any) {}
   };
@@ -154,7 +142,6 @@ const AdminDashboardComponent = () => {
 
   useEffect(() => {
     getNewBookings();
-    getNotCheckedOutBookings();
     getRoomAvailability();
     getTotalUsers();
     getLatestBooking();

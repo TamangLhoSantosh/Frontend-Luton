@@ -33,10 +33,6 @@ const apis = {
     return axiosClient.get("/booking/latest-bookings");
   },
 
-  getNotCheckedOutBookings() {
-    return axiosClient.get("/booking/bookings-not-checked-out");
-  },
-
   getRoomAvailability() {
     return axiosClient.get("/booking/room-availability");
   },
