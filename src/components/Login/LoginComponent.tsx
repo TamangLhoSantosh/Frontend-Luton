@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Checkbox, FormControlLabel } from "@mui/material";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ContextProvider } from "../../hooks/ContextProvider";
@@ -41,10 +40,10 @@ const SignIn = () => {
         response = await apis.login(data);
       }
       if (response.status === 200) {
-        setUser(response.data.user);
         localStorage.setItem("token", response.data.token);
         toast.success("Logged in successfully");
         setTimeout(() => {
+          setUser(response.data.user);
           if (response.data.user.role === "user") navigate("/");
           else navigate("/adminDashboard");
         }, 2000);
