@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ContextProvider } from "../../hooks/ContextProvider";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import apis from "../../config/apis";
 
 const SignIn = () => {
@@ -128,7 +128,6 @@ const SignIn = () => {
           </Link>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };

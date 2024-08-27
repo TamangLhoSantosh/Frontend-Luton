@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { ContextProvider } from "../../hooks/ContextProvider";
 import apis from "../../config/apis";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 // Booking form data interface
 interface BookingFormData {
@@ -275,7 +275,6 @@ const BookNowComponent: React.FC = () => {
           Book Now
         </button>
       </form>
-      <ToastContainer />
     </div>
   );
 };

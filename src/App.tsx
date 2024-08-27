@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { ContextProvider } from "./hooks/ContextProvider";
+import { ToastContainer } from "react-toastify";
 import NavbarComponent from "./components/Navbar/NavbarComponent";
 import HomeComponent from "./components/Home/HomeComponent";
 import FooterComponent from "./components/Footer/FooterComponent";
@@ -12,8 +15,6 @@ import ScrollToTop from "./components/ScrollToTop";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext } from "react";
-import { ContextProvider } from "./hooks/ContextProvider";
 
 function App() {
   const { user } = useContext(ContextProvider);
@@ -53,6 +54,17 @@ function App() {
         <Route path="/adminDashboard" element={<AdminComponent />} />
       </Routes>
       <ScrollToTop />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </BrowserRouter>
   );
 }

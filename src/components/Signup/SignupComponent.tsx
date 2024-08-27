@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useFormik } from "formik";
 import { authStoreSchema } from "../../config/AuthFormikSchema";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import apis from "../../config/apis";
 
 const SignupComponent = () => {
@@ -280,17 +280,6 @@ const SignupComponent = () => {
           </div>
         </form>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </div>
   );
 };

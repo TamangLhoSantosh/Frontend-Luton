@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ContextProvider } from "../../hooks/ContextProvider";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface ProfileInfoProps {
   user: any; // Replace 'any' with a more specific type if possible
@@ -19,6 +19,7 @@ const ProfileInfo = ({ user, setShowProfile }: ProfileInfoProps) => {
 
   const handleLogOut = async () => {
     setUser({
+      _id: "",
       address: "",
       dateOfBirth: "",
       email: "",
@@ -66,7 +67,6 @@ const ProfileInfo = ({ user, setShowProfile }: ProfileInfoProps) => {
           Logout
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 };

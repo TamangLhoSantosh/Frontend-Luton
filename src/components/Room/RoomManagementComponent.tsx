@@ -2,7 +2,7 @@ import { CiFilter } from "react-icons/ci";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import apis from "../../config/apis";
 import { TextField } from "@mui/material";
 import AddRoomComponent from "./AddRoomComponent";
@@ -262,9 +262,6 @@ const RoomManagementComponent = () => {
       {showForm && (
         <AddRoomComponent onClose={closeForm} roomTypes={roomTypes} />
       )}
-
-      {/* Toast Container */}
-      <ToastContainer />
     </div>
   );
 };

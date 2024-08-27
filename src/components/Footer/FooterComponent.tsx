@@ -1,6 +1,6 @@
 import { FormEventHandler, useState } from "react";
 import Logo from "../../assets/logo.png";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import apis from "../../config/apis";
 
 const FooterComponent = () => {
@@ -64,7 +64,6 @@ const FooterComponent = () => {
           </button>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };

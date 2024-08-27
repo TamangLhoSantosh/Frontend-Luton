@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import apis from "../../config/apis";
 
@@ -106,7 +106,6 @@ const CheckAvailability = () => {
       >
         Check Availability
       </button>
-      <ToastContainer />
     </form>
   );
 };
