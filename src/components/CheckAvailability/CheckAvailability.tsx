@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import apis from "../../config/apis";
+import { formatDate } from "../../utils/dateUtils";
 
 // Form data interface
 interface FormData {
@@ -27,8 +28,13 @@ const CheckAvailability = () => {
   const formik = useFormik<FormData>({
     initialValues: formData,
     onSubmit: async (values) => {
+      const formattedValues = {
+        ...values,
+        checkInDate: formatDate(values.checkInDate),
+        checkOutDate: formatDate(values.checkOutDate),
+      };
       try {
-        const response = await apis.checkAvailability(values);
+        const response = await apis.checkAvailability(formattedValues);
         toast.success(response.data.message);
       } catch (e: any) {
         toast.error(e.response.data.error);

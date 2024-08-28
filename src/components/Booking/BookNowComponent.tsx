@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import { ContextProvider } from "../../hooks/ContextProvider";
 import apis from "../../config/apis";
 import { toast } from "react-toastify";
+import { formatDate } from "../../utils/dateUtils";
 
 // Booking form data interface
 interface BookingFormData {
@@ -58,10 +59,10 @@ const BookNowComponent: React.FC = () => {
         };
 
   // Book room
-  const addBooking = async () => {
+  const addBooking = async (formattedValues: BookingFormData) => {
     try {
-      console.log(formik.values);
-      const response = await apis.addBooking(formik.values);
+      console.log(formattedValues);
+      const response = await apis.addBooking(formattedValues);
       console.log(response.data);
       if (response.status !== 200) {
         toast.error(response.data.error);
@@ -71,11 +72,19 @@ const BookNowComponent: React.FC = () => {
       toast.error(e.response.data.error);
     }
   };
+
   // Formik hook
   const formik = useFormik<BookingFormData>({
     initialValues: data,
-    onSubmit: () => {
-      addBooking();
+    onSubmit: (values) => {
+      const formattedValues = {
+        ...values,
+        checkInDate: values.checkInDate ? formatDate(values.checkInDate) : null,
+        checkOutDate: values.checkOutDate
+          ? formatDate(values.checkOutDate)
+          : null,
+      };
+      addBooking(formattedValues);
     },
   });
 

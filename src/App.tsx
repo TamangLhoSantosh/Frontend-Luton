@@ -25,6 +25,7 @@ function App() {
           path="/"
           element={<PageWrapper component={<HomeComponent />} />}
         />
+        {/* If user is logged in, don't show login and signup page */}
         {user && user.role ? (
           <></>
         ) : (
