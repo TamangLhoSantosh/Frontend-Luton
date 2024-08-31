@@ -17,10 +17,11 @@ const FooterComponent = () => {
     if (!validateEmail(email)) return;
     try {
       const response = await apis.subscribe(email);
-      if (response.status === 200) {
+      console.log(response.status);
+      if (response.status === 201) {
         toast.success("Subscribed Successfully");
         setEmail("");
-      } else if (response.status === 400) {
+      } else {
         toast.error(response.data.error);
       }
     } catch (e: any) {

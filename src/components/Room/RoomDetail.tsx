@@ -40,8 +40,10 @@ const RoomDetails = () => {
         className="my-4 mx-auto bg-cover bg-center rounded-lg w-1/2 h-56 md:h-[500px]"
         style={{ backgroundImage: `url(${roomDetail.image})` }}
       ></div>
-      <p className="text-xl  mt-10">{roomDetail.description}</p>
-      <div className="mt-6">
+      <p className="text-xl container mx-auto mt-10">
+        {roomDetail.description}
+      </p>
+      <div className="container mx-auto mt-6">
         <h2 className="text-3xl font-semibold text-customDarkOrange">
           Features:
         </h2>

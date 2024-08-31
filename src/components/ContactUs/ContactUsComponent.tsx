@@ -1,14 +1,14 @@
 import React from "react";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
-import { contactSchema } from "../../config/AuthFormikSchema";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { toast } from "react-toastify";
 import apis from "../../config/apis";
+import { contactSchema } from "../../config/AuthFormikSchema";
 
-const ContactUsComponent: React.FC = () => {
+const ContactUsComponent: React.FC = React.memo(() => {
   const data = {
     fullName: "",
     email: "",
@@ -16,12 +16,22 @@ const ContactUsComponent: React.FC = () => {
   };
 
   // Handle form submission
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, { resetForm }: any) => {
     try {
       const response = await apis.contactUs(values);
-      toast.success("Message sent successfully", response.data.message);
+      if (response.status === 201) {
+        toast.success("Message sent successfully", response.data.message);
+        resetForm();
+      } else {
+        toast.error(
+          response.data.error || "An error occurred. Please try again."
+        );
+      }
     } catch (e: any) {
-      toast.error(e.response.data.error);
+      toast.error(
+        e.response?.data?.error ||
+          "Failed to send message. Please check your connection."
+      );
     }
   };
 
@@ -51,7 +61,9 @@ const ContactUsComponent: React.FC = () => {
               <EmailIcon className="text-customOrange text-3xl" />
               <div>
                 <p className="text-2xl font-semibold pb-4">Message Us</p>
-                <p className="text-gray-700">info@lutonhotel.com</p>
+                <a href="mailto:info@lutonhotel.com" className="text-gray-700">
+                  info@lutonhotel.com
+                </a>
               </div>
             </div>
             <div className="flex items-center gap-4 my-4">
@@ -118,6 +130,6 @@ const ContactUsComponent: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ContactUsComponent;
