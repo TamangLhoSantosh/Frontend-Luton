@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const BookNowButton = () => {
   return (
-    <div className="flex flex-col justify-center items-center my-20 font-ubuntu">
+    <div className="flex flex-col justify-center items-center mt-32 font-ubuntu">
       <p className="text-5xl text-customDarkOrange">Get a room already!</p>
       <Link
         to="/booknow"
