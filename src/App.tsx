@@ -1,5 +1,11 @@
 import { useContext } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { ContextProvider } from "./hooks/ContextProvider";
 import { ToastContainer } from "react-toastify";
 import NavbarComponent from "./components/Navbar/NavbarComponent";
@@ -12,6 +18,7 @@ import BookNowComponent from "./components/Booking/BookNowComponent";
 import RoomDetails from "./components/Room/RoomDetail";
 import AdminComponent from "./components/AdminDashboard/AdminComponent";
 import ScrollToTop from "./components/ScrollToTop";
+import ManageAccountComponent from "./components/ManageAccount/ManageAccountComponent";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,11 +32,16 @@ function App() {
           path="/"
           element={<PageWrapper component={<HomeComponent />} />}
         />
+        <Route
+          path="/manageaccount"
+          element={<PageWrapper component={<ManageAccountComponent />} />}
+        />
         {/* If user is logged in, don't show login and signup page */}
         {user && user.role ? (
           <></>
         ) : (
           <>
+            {/* <Route path="/manageaccount" element={<Navigate to="/login" />} /> */}
             <Route
               path="/login"
               element={<PageWrapper component={<LoginComponent />} />}
